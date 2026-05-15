@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LabGest — Mattos e Manfroi</title>
+<title>LabGest v5 — Mattos e Manfroi</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
@@ -173,6 +173,9 @@ textarea{resize:vertical;min-height:70px}
 @media(max-width:680px){.sb{width:52px;min-width:52px}.sbn,.sbsub,.ni span,.ns,.sbft,.uinfo{display:none}.ni{justify-content:center;padding:10px}.kg{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}.fr{grid-template-columns:1fr}.ag{grid-template-columns:1fr 1fr}.mn{padding:14px 10px}}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:10px}
 
+/* Extra v5 */
+.px-item{transition:all .12s}
+.px-item:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
 </style>
 </head>
 <body>
@@ -180,12 +183,12 @@ textarea{resize:vertical;min-height:70px}
 <div class="ls" id="loginScreen">
   <div class="lb">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-      <div style="width:36px;height:36px;background:var(--bl);border-radius:9px;display:flex;align-items:center;justify-content:center">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
+      <div style="width:38px;height:38px;background:var(--bl);border-radius:10px;display:flex;align-items:center;justify-content:center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
       </div>
       <span class="lt">LabGest</span>
     </div>
-    <div class="ls2">Laboratório Mattos e Manfroi · RDC 978/2025</div>
+    <div class="ls2">Laboratório de Análises Clínicas Mattos e Manfroi · RDC 978/2025</div>
     <label class="ll">Usuário</label>
     <select class="li" id="le">
       <option value="">Selecione seu nome...</option>
@@ -200,15 +203,15 @@ textarea{resize:vertical;min-height:70px}
     <input class="li" type="password" id="ls" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter')fazerLogin()">
     <button class="lbtn" id="lbtn" onclick="fazerLogin()">Entrar</button>
     <div class="lerr" id="lerr"></div>
-    <div class="lhint"><b>Senhas iniciais:</b> primeiras 4 letras do nome + 2026<br>Ex: Luiza → <b>luiz2026</b> · Liege → <b>lieg2026</b></div>
+    <div class="lhint"><b>Senhas iniciais:</b> primeiras 4 letras do nome + 2026<br>Luiza → <b>luiz2026</b> · Liege → <b>lieg2026</b> · Dulce → <b>dulc2026</b></div>
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- MODAL DOCUMENTO -->
 <div class="mo" id="docModal">
   <div class="mb">
     <div class="mh">
-      <div>
+      <div style="flex:1;min-width:0">
         <div class="mt" id="m-titulo">Documento</div>
         <div style="font-size:11px;color:var(--tx2)" id="m-meta"></div>
       </div>
@@ -216,9 +219,9 @@ textarea{resize:vertical;min-height:70px}
     </div>
     <div class="mm" id="m-body"></div>
     <div class="mf">
-      <button class="bp" id="m-btn-salvar" onclick="salvarDocModal()" style="display:none">Salvar</button>
+      <button class="bp" id="m-btn-salvar" onclick="salvarDocModal()" style="display:none">Salvar alterações</button>
       <button class="bs" id="m-btn-leitura" onclick="confirmarLeitura()">✓ Confirmar leitura</button>
-      <span id="m-feedback" style="font-size:12px;color:var(--gn)"></span>
+      <span id="m-feedback" style="font-size:12px"></span>
       <div style="margin-left:auto;font-size:11px;color:var(--tx2)" id="m-leituras"></div>
     </div>
   </div>
@@ -237,31 +240,64 @@ textarea{resize:vertical;min-height:70px}
     </div>
     <div class="ubar">
       <div class="uav" id="uav">?</div>
-      <div class="uinfo">
-        <div class="unm" id="unm">Usuário</div>
-        <div class="ucg" id="ucg"></div>
-      </div>
+      <div class="uinfo"><div class="unm" id="unm">Usuário</div><div class="ucg" id="ucg"></div></div>
       <button class="ubtn" onclick="logout()">Sair</button>
     </div>
+
     <div class="ns">Principal</div>
-    <div class="ni active" onclick="nav('dashboard',this)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Dashboard</span></div>
-    <div class="ni" onclick="nav('documentos',this)"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Documentos</span></div>
-    <div class="ni" onclick="nav('vencimentos',this)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Vencimentos</span><span class="nb" id="nb-venc">0</span></div>
-    <div class="ni" onclick="nav('cq',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Controle qualidade</span></div>
-    <div class="ni" onclick="nav('temperaturas',this)"><svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 00-5 0v11.26a4.5 4.5 0 105 0z"/></svg><span>Temperaturas</span></div>
-    <div class="ni" onclick="nav('limpezas',this)"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>Limpezas</span></div>
-    <div class="ns">Gestão</div>
-    <div class="ni" onclick="nav('upload',this)"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span>Upload de laudos</span></div>
-    <div class="ni" onclick="nav('log',this)"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg><span>Atividades</span></div>
-    <div class="ns">CQ Bioquímica</div>
-    <div class="ni" onclick="nav('bio-cqi',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>CQI Bioquímica</span></div>
-    <div class="ns">PRO-EX / PNCQ</div>
-    <div class="ni" onclick="nav('proex-dash',this)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Dashboard PRO-EX</span></div>
-    <div class="ni" onclick="nav('proex-lancar',this)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>Lançar ciclo</span></div>
-    <div class="ni" onclick="nav('proex-hist',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Histórico PRO-EX</span></div>
+    <div class="ni active" onclick="nav('dashboard',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Dashboard</span>
+    </div>
+
+    <div class="ns">Procedimentos da Qualidade</div>
+    <div class="ni" onclick="nav('pq',this)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PQ — Todos os procedimentos</span>
+    </div>
+
+    <div class="ns">Controle de Qualidade</div>
+    <div class="ni" onclick="nav('cq-hemato',this)">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>CQ Interno — Hematologia</span>
+    </div>
+    <div class="ni" onclick="nav('cq-interno',this)">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>CQ Interno — Bioquímica</span>
+    </div>
+    <div class="ni" onclick="nav('cq-externo',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>CQ Externo — PRO-EX</span>
+    </div>
+
+    <div class="ns">Registros</div>
+    <div class="ni" onclick="nav('temperaturas',this)">
+      <svg viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 00-5 0v11.26a4.5 4.5 0 105 0z"/></svg><span>Controle de temperaturas</span>
+    </div>
+    <div class="ni" onclick="nav('limpezas',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>Limpezas e manutenções</span>
+    </div>
+
+    <div class="ns">Treinamentos</div>
+    <div class="ni" onclick="nav('treinamentos',this)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span>Treinamentos internos</span>
+    </div>
+    <div class="ni" onclick="nav('certificados',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg><span>Certificados externos</span>
+    </div>
+
+    <div class="ns">Documentos e Laudos</div>
+    <div class="ni" onclick="nav('vencimentos',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Vencimentos</span><span class="nb" id="nb-venc">0</span>
+    </div>
+    <div class="ni" onclick="nav('upload',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span>Upload de laudos</span>
+    </div>
+    <div class="ni" onclick="nav('log',this)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Registro de atividades</span>
+    </div>
+
     <div class="ns" id="nav-admin" style="display:none">Administração</div>
-    <div class="ni" id="nav-usuarios" style="display:none" onclick="nav('usuarios',this)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Usuários</span></div>
-    <div class="sbft"><span>RDC 978/2025 · PRO-EX</span>LabGest v4.0</div>
+    <div class="ni" id="nav-usuarios" style="display:none" onclick="nav('usuarios',this)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span>Usuários</span>
+    </div>
+
+    <div class="sbft"><span>RDC 978/2025 · PRO-EX PNCQ</span>LabGest v5.0 · Mattos e Manfroi</div>
   </div>
 
   <!-- MAIN -->
@@ -269,76 +305,152 @@ textarea{resize:vertical;min-height:70px}
 
     <!-- DASHBOARD -->
     <div class="pg active" id="pg-dashboard">
-      <div class="ph"><div class="pt">Dashboard</div><div class="ps" id="dash-sub">Laboratório Mattos e Manfroi</div></div>
+      <div class="ph"><div class="pt">Dashboard</div><div class="ps">Laboratório de Análises Clínicas Mattos e Manfroi · RDC 978/2025</div></div>
       <div class="kg">
-        <div class="kp bl"><div class="kv" id="kv-docs">—</div><div class="kl">Documentos</div></div>
-        <div class="kp dg"><div class="kv" id="kv-venc">—</div><div class="kl">Vencendo em 60d</div></div>
-        <div class="kp wn"><div class="kv" id="kv-rev">—</div><div class="kl">Em revisão</div></div>
-        <div class="kp ok"><div class="kv">6</div><div class="kl">Usuários ativos</div></div>
+        <div class="kp bl"><div class="kv" id="kv-docs">—</div><div class="kl">Documentos cadastrados</div></div>
+        <div class="kp dg"><div class="kv" id="kv-venc">—</div><div class="kl">Vencendo em 60 dias</div></div>
+        <div class="kp wn"><div class="kv" id="kv-rev">—</div><div class="kl">PQs em revisão</div></div>
+        <div class="kp ok"><div class="kv">500</div><div class="kl">Último ciclo PRO-EX</div></div>
       </div>
       <div class="g2">
         <div class="cd"><div class="ct"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Vencimentos próximos</div><div id="dash-venc"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
-        <div class="cd"><div class="ct"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Atividades recentes</div><div id="dash-ativ"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
+        <div class="cd"><div class="ct"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Últimas atividades</div><div id="dash-ativ"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
       </div>
     </div>
 
-    <!-- DOCUMENTOS -->
-    <div class="pg" id="pg-documentos">
-      <div class="ph"><div class="pt">Documentos</div><div class="ps">Clique para abrir, ler e editar · Leitura registrada por usuário</div></div>
+    <!-- PQ -->
+    <div class="pg" id="pg-pq">
+      <div class="ph"><div class="pt">Procedimentos da Qualidade (PQ)</div><div class="ps">Todos os procedimentos operacionais · Clique para abrir e confirmar leitura</div></div>
       <div class="tb">
-        <div class="tt active" onclick="tabDoc('todos',this)">Todos</div>
-        <div class="tt" onclick="tabDoc('Hematologia',this)">Hematologia</div>
-        <div class="tt" onclick="tabDoc('Bioquímica',this)">Bioquímica</div>
-        <div class="tt" onclick="tabDoc('Imunologia',this)">Imunologia</div>
-        <div class="tt" onclick="tabDoc('Coletas',this)">Coletas</div>
-        <div class="tt" onclick="tabDoc('licencas',this)">Licenças</div>
-        <div class="tt" onclick="tabDoc('seguranca',this)">Segurança</div>
+        <div class="tt active" onclick="tabPQ('todos',this)">Todos</div>
+        <div class="tt" onclick="tabPQ('Hematologia',this)">Hematologia</div>
+        <div class="tt" onclick="tabPQ('Bioquímica',this)">Bioquímica</div>
+        <div class="tt" onclick="tabPQ('Imunologia',this)">Imunologia</div>
+        <div class="tt" onclick="tabPQ('Urinálise',this)">Urinálise</div>
+        <div class="tt" onclick="tabPQ('Coletas',this)">Coletas</div>
+        <div class="tt" onclick="tabPQ('Higienização',this)">Higienização</div>
+        <div class="tt" onclick="tabPQ('Parasitologia',this)">Parasitologia</div>
+        <div class="tt" onclick="tabPQ('Microbiologia',this)">Microbiologia</div>
+        <div class="tt" onclick="tabPQ('Qualidade',this)">Qualidade</div>
+        <div class="tt" onclick="tabPQ('Segurança',this)">Segurança</div>
       </div>
-      <input type="text" class="sc" id="doc-busca" placeholder="🔍 Buscar documento..." oninput="filtrarDocs()">
-      <div id="doc-lista"><div style="color:var(--tx3);font-size:13px;padding:16px 0">Carregando...</div></div>
+      <input type="text" class="sc" id="pq-busca" placeholder="🔍 Buscar procedimento..." oninput="filtrarPQ()">
+      <div id="pq-lista"><div style="color:var(--tx3);font-size:13px;padding:16px 0">Carregando...</div></div>
     </div>
 
-    <!-- VENCIMENTOS -->
-    <div class="pg" id="pg-vencimentos">
-      <div class="ph"><div class="pt">Controle de vencimentos</div><div class="ps">Laudos, calibrações e documentos com prazo</div></div>
-      <div id="venc-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div>
-    </div>
-
-    <!-- CQ -->
-    <div class="pg" id="pg-cq">
-      <div class="ph"><div class="pt">Controle de qualidade — Hematologia</div><div class="ps">Celltac ES · Levey-Jennings · Westgard</div></div>
+    <!-- CQ HEMATOLOGIA -->
+    <div class="pg" id="pg-cq-hemato">
+      <div class="ph"><div class="pt">CQ Interno — Hematologia</div><div class="ps">Celltac ES · Lote 3062025 · Levey-Jennings · Regras de Westgard</div></div>
       <div class="cd" style="margin-bottom:12px">
-        <div class="ct">Levey-Jennings — Lote 3062025</div>
+        <div class="ct">Levey-Jennings — dados reais do Drive</div>
         <div class="fr" style="margin-bottom:10px">
-          <div><label class="fl">Parâmetro</label><select id="hem-par" onchange="renderHematoChart()"><option value="wbc">GB WBC — Alvo 14,7</option><option value="hgb">HB HGB — Alvo 13,4 g/dl</option><option value="plt">PLAQ. — Alvo 195</option></select></div>
-          <div><label class="fl">Nível</label><select><option>Nível 1</option><option>Nível 2</option></select></div>
+          <div><label class="fl">Parâmetro</label><select id="hem-par" onchange="renderHematoChart()">
+            <option value="wbc">GB WBC — Alvo 14,7 (±1,5 / ±3,0)</option>
+            <option value="hgb">HB HGB — Alvo 13,4 g/dl (±1,0 / ±2,0)</option>
+            <option value="plt">PLAQ. PLTS — Alvo 195 (±22 / ±44)</option>
+          </select></div>
+          <div><label class="fl">Lote</label><input type="text" value="3062025" readonly style="background:var(--s2)"></div>
         </div>
         <div class="cw"><canvas id="hemChart"></canvas></div>
         <div id="hem-stats" style="display:flex;gap:14px;font-size:12px;color:var(--tx2);margin-top:8px;flex-wrap:wrap"></div>
       </div>
       <div class="cd">
-        <div class="ct">Lançar resultado</div>
+        <div class="ct">Lançar novo resultado</div>
         <div class="fr">
           <div class="fg"><label class="fl">Data</label><input type="date" id="cq-dt"></div>
           <div class="fg"><label class="fl">Responsável</label><input type="text" id="resp-cq" readonly></div>
         </div>
         <div class="fr">
-          <div class="fg"><label class="fl">GB WBC</label><input type="number" step="0.1" id="cq-wbc" placeholder="ex: 14.7"></div>
+          <div class="fg"><label class="fl">GB WBC (10³/mm³)</label><input type="number" step="0.1" id="cq-wbc" placeholder="ex: 14.7"></div>
           <div class="fg"><label class="fl">HB HGB (g/dl)</label><input type="number" step="0.1" id="cq-hgb" placeholder="ex: 13.4"></div>
         </div>
         <div class="fr">
-          <div class="fg"><label class="fl">PLAQ.</label><input type="number" id="cq-plt" placeholder="ex: 195"></div>
-          <div class="fg"><label class="fl">Lote</label><input type="text" id="cq-lote" value="3062025"></div>
+          <div class="fg"><label class="fl">PLAQ. PLTS (10³/mm³)</label><input type="number" id="cq-plt" placeholder="ex: 195"></div>
+          <div class="fg"><label class="fl">Lote do controle</label><input type="text" id="cq-lote" value="3062025"></div>
         </div>
-        <div class="fg"><label class="fl">Observação</label><textarea id="cq-obs" placeholder="Intercorrências..."></textarea></div>
-        <button class="bp" onclick="salvarCQHem()">Salvar</button>
+        <div class="fg"><label class="fl">Observação / Ação corretiva</label><textarea id="cq-obs" placeholder="Registre intercorrências ou ações tomadas..."></textarea></div>
+        <button class="bp" onclick="salvarCQHem()">Salvar resultado</button>
         <span id="cq-fb" style="margin-left:10px;font-size:12px"></span>
+      </div>
+    </div>
+
+    <!-- CQ BIOQUÍMICA -->
+    <div class="pg" id="pg-cq-interno">
+      <div class="ph"><div class="pt">CQ Interno — Bioquímica</div><div class="ps">URIT 8021A · 12 analitos · Levey-Jennings</div></div>
+      <div class="cd" style="margin-bottom:12px"><div class="ag" id="analito-grid"></div></div>
+      <div class="cd" style="margin-bottom:12px">
+        <div class="ct" id="cqi-titulo">Glicose — Levey-Jennings</div>
+        <div style="margin-bottom:10px"><label class="fl">Nível de controle</label><select id="bio-nivel" onchange="renderCQIChart()" style="max-width:180px"><option value="1">Nível 1 (normal)</option><option value="2">Nível 2 (patológico)</option></select></div>
+        <div class="cw"><canvas id="cqiChart"></canvas></div>
+        <div id="cqi-stats" style="display:flex;gap:14px;font-size:12px;color:var(--tx2);margin-top:8px;flex-wrap:wrap"></div>
+      </div>
+      <div class="cd">
+        <div class="ct">Lançar resultado — <span id="bio-analito">Glicose</span></div>
+        <div class="fr">
+          <div class="fg"><label class="fl">Data</label><input type="date" id="bio-data"></div>
+          <div class="fg"><label class="fl">Lote do controle</label><input type="text" id="bio-lote" placeholder="ex: LOT-2026-05"></div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label class="fl">Valor Nível 1</label><input type="number" step="0.01" id="bio-n1" placeholder="ex: 100.5"></div>
+          <div class="fg"><label class="fl">Valor Nível 2</label><input type="number" step="0.01" id="bio-n2" placeholder="ex: 350.0"></div>
+        </div>
+        <button class="bp" onclick="salvarCQI()">Salvar</button>
+        <span id="bio-fb" style="margin-left:10px;font-size:12px"></span>
+      </div>
+    </div>
+
+    <!-- CQ EXTERNO PRO-EX -->
+    <div class="pg" id="pg-cq-externo">
+      <div class="ph"><div class="pt">CQ Externo — PRO-EX / PNCQ</div><div class="ps">Avaliação Externa da Qualidade · Lotes 448–500 (2021–2026) · Resultados reais</div></div>
+      <div class="kg">
+        <div class="kp bl"><div class="kv" id="px-kpi-total">53</div><div class="kl">Ciclos registrados</div></div>
+        <div class="kp ok"><div class="kv" id="px-kpi-acerto">16</div><div class="kl">100% acerto</div></div>
+        <div class="kp dg"><div class="kv" id="px-kpi-inac">37</div><div class="kl">Com inaceitáveis</div></div>
+        <div class="kp" style="background:#f0e8fa"><div class="kv" style="color:#5a1a8a">501</div><div class="kl">Próximo ciclo</div></div>
+      </div>
+
+      <!-- Novo ciclo com upload -->
+      <div class="cd" style="margin-bottom:12px">
+        <div class="ct">Lançar novo ciclo PRO-EX</div>
+        <div class="fr">
+          <div class="fg"><label class="fl">Número do lote</label><input type="number" id="px-novo-lote" placeholder="ex: 501"></div>
+          <div class="fg"><label class="fl">Data do resultado</label><input type="date" id="px-novo-data"></div>
+        </div>
+        <div class="fg"><label class="fl">Resultados inaceitáveis (ou "100% ACERTO")</label><input type="text" id="px-novo-inac" placeholder="ex: Colesterol, TGO — ou 100% ACERTO"></div>
+        <div class="fr">
+          <div class="fg"><label class="fl">Medida corretiva</label><textarea id="px-novo-corr" style="min-height:60px" placeholder="ex: Reajuste com controles internos..."></textarea></div>
+          <div class="fg"><label class="fl">Medida preventiva</label><textarea id="px-novo-prev" style="min-height:60px" placeholder="ex: Acompanhamento com controles..."></textarea></div>
+        </div>
+        <div class="fg"><label class="fl">Observações</label><textarea id="px-novo-obs" style="min-height:50px" placeholder="ex: CQI interno estava dentro dos parâmetros aceitáveis..."></textarea></div>
+        <div class="fg"><label class="fl">Upload do PDF de resultado PNCQ (opcional)</label>
+          <div style="display:flex;align-items:center;gap:10px">
+            <label style="cursor:pointer;padding:6px 14px;border:1px solid var(--bd2);border-radius:7px;font-size:12px;background:var(--s2)">
+              Selecionar PDF <input type="file" id="px-pdf" accept=".pdf" style="display:none" onchange="handleProEXFile(this)">
+            </label>
+            <span id="px-fname" style="font-size:12px;color:var(--gn)"></span>
+          </div>
+        </div>
+        <button class="bp" onclick="salvarNovoCiclo()">Salvar ciclo</button>
+        <span id="px-novo-fb" style="margin-left:10px;font-size:12px"></span>
+      </div>
+
+      <!-- Histórico -->
+      <div class="cd">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div class="ct" style="margin:0">Histórico completo — todos os ciclos</div>
+          <div class="tb" style="border:none;margin:0">
+            <div class="tt active" onclick="filtroProEX('todos',this)">Todos</div>
+            <div class="tt" onclick="filtroProEX('acerto',this)">100% acerto</div>
+            <div class="tt" onclick="filtroProEX('inac',this)">Com inaceitáveis</div>
+          </div>
+        </div>
+        <div id="proex-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div>
       </div>
     </div>
 
     <!-- TEMPERATURAS -->
     <div class="pg" id="pg-temperaturas">
-      <div class="ph"><div class="pt">Controle de temperaturas</div><div class="ps">Banho Maria · Geladeiras · Estufa · Ambiente · Osmose</div></div>
+      <div class="ph"><div class="pt">Controle de temperaturas</div><div class="ps">Banho Maria · Geladeiras · Estufa · Temperatura Ambiente · Osmose Reversa</div></div>
       <div class="cd" style="margin-bottom:12px">
         <div class="ct">Novo registro</div>
         <div class="fr">
@@ -355,74 +467,125 @@ textarea{resize:vertical;min-height:70px}
           <div class="fg"><label class="fl">Data</label><input type="date" id="temp-data"></div>
         </div>
         <div class="fr">
-          <div class="fg"><label class="fl">Temperatura</label><input type="text" id="temp-val" placeholder="ex: 37.2°C"></div>
+          <div class="fg"><label class="fl">Turno</label><select id="temp-turno"><option value="manha">Manhã</option><option value="tarde">Tarde</option></select></div>
           <div class="fg"><label class="fl">Horário</label><input type="time" id="temp-hora"></div>
         </div>
-        <div class="fg"><label class="fl">Responsável</label><input type="text" id="resp-temp" readonly></div>
-        <div class="fg"><label class="fl">Observação</label><input type="text" id="temp-obs" placeholder="Opcional"></div>
+        <div class="fr">
+          <div class="fg"><label class="fl">Temperatura</label><input type="text" id="temp-val" placeholder="ex: 37,2°C"></div>
+          <div class="fg"><label class="fl">Responsável</label><input type="text" id="resp-temp" readonly></div>
+        </div>
+        <div class="fg"><label class="fl">Observação</label><input type="text" id="temp-obs" placeholder="Opcional — intercorrências"></div>
         <button class="bp" onclick="salvarTemp()">Salvar</button>
         <span id="temp-fb" style="margin-left:10px;font-size:12px"></span>
       </div>
-      <div class="cd"><div class="ct">Registros recentes</div><div id="temp-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
+      <div class="cd"><div class="ct">Registros</div><div id="temp-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
     </div>
 
     <!-- LIMPEZAS -->
     <div class="pg" id="pg-limpezas">
-      <div class="ph"><div class="pt">Registros de limpeza</div><div class="ps">Geladeiras, equipamentos e superfícies</div></div>
+      <div class="ph"><div class="pt">Limpezas e manutenções</div><div class="ps">Geladeiras · Banho Maria · Microscópio · Superfícies · Outros equipamentos</div></div>
       <div class="cd" style="margin-bottom:12px">
-        <div class="ct">Novo registro</div>
+        <div class="ct">Novo registro de limpeza</div>
         <div class="fr">
-          <div class="fg"><label class="fl">Equipamento</label>
+          <div class="fg"><label class="fl">Equipamento / Área</label>
             <select id="limp-equip">
-              <option>Geladeira insumos</option><option>Geladeira material biológico</option>
-              <option>Banho maria</option><option>Microscópio</option>
-              <option>Superfícies e bancadas</option><option>Estufa</option><option>Centrífuga</option>
+              <option>Geladeira insumos</option>
+              <option>Geladeira material biológico</option>
+              <option>Banho Maria</option>
+              <option>Microscópio</option>
+              <option>Superfícies e bancadas</option>
+              <option>Estufa</option>
+              <option>Centrífuga</option>
+              <option>Analisador hematológico (Celltac ES)</option>
+              <option>Analisador bioquímico (URIT 8021A)</option>
             </select>
           </div>
           <div class="fg"><label class="fl">Data</label><input type="date" id="limp-data"></div>
         </div>
         <div class="fr">
+          <div class="fg"><label class="fl">Turno</label><select id="limp-turno"><option value="manha">Manhã</option><option value="tarde">Tarde</option></select></div>
           <div class="fg"><label class="fl">Horário</label><input type="time" id="limp-hora"></div>
-          <div class="fg"><label class="fl">Produto</label><input type="text" id="limp-prod" placeholder="ex: Álcool 70%"></div>
         </div>
-        <div class="fg"><label class="fl">Responsável</label><input type="text" id="resp-limp" readonly></div>
-        <div class="fg"><label class="fl">Observações</label><textarea id="limp-obs" placeholder="Intercorrências..."></textarea></div>
+        <div class="fr">
+          <div class="fg"><label class="fl">Produto utilizado</label><input type="text" id="limp-prod" placeholder="ex: Álcool 70%, Hipoclorito..."></div>
+          <div class="fg"><label class="fl">Responsável</label><input type="text" id="resp-limp" readonly></div>
+        </div>
+        <div class="fg"><label class="fl">Observações</label><textarea id="limp-obs" placeholder="Intercorrências, observações..."></textarea></div>
         <button class="bp" onclick="salvarLimp()">Salvar</button>
         <span id="limp-fb" style="margin-left:10px;font-size:12px"></span>
       </div>
-      <div class="cd"><div class="ct">Registros recentes</div><div id="limp-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
+      <div class="cd"><div class="ct">Registros</div><div id="limp-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
+    </div>
+
+    <!-- TREINAMENTOS -->
+    <div class="pg" id="pg-treinamentos">
+      <div class="ph"><div class="pt">Treinamentos internos</div><div class="ps">Confirme sua leitura — fica registrado como participação no treinamento</div></div>
+      <div class="cd">
+        <div class="ct">Treinamentos obrigatórios</div>
+        <div id="trei-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div>
+      </div>
+    </div>
+
+    <!-- CERTIFICADOS -->
+    <div class="pg" id="pg-certificados">
+      <div class="ph"><div class="pt">Certificados externos</div><div class="ps">Certificados e cursos externos por colaboradora · 2024–2026</div></div>
+      <div class="cd" style="margin-bottom:12px">
+        <div class="fg"><label class="fl">Filtrar por colaboradora</label>
+          <select id="cert-filtro" onchange="carregarCertificados()" style="max-width:280px">
+            <option value="">Todas</option>
+            <option>Luiza Manfroi de Mattos</option>
+            <option>Dulcemeri Pessetti Dario</option>
+            <option>Ana Caroline Braz Nascimento</option>
+            <option>Luciane</option>
+            <option>Grazi</option>
+          </select>
+        </div>
+      </div>
+      <div class="cd"><div id="cert-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
+    </div>
+
+    <!-- VENCIMENTOS -->
+    <div class="pg" id="pg-vencimentos">
+      <div class="ph"><div class="pt">Controle de vencimentos</div><div class="ps">Laudos, calibrações, licenças e documentos com prazo</div></div>
+      <div id="venc-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div>
     </div>
 
     <!-- UPLOAD -->
     <div class="pg" id="pg-upload">
-      <div class="ph"><div class="pt">Upload de laudos</div><div class="ps">Envie laudos e documentos com controle de vencimento automático</div></div>
+      <div class="ph"><div class="pt">Upload de laudos e documentos</div><div class="ps">Envie laudos com controle de vencimento automático</div></div>
       <div class="cd" style="margin-bottom:12px">
         <div class="ct">Novo documento</div>
         <div class="fr">
-          <div class="fg"><label class="fl">Tipo</label>
+          <div class="fg"><label class="fl">Categoria</label>
             <select id="up-tipo">
-              <option>Controle Microbiológico da Água</option><option>Calibração de equipamento</option>
-              <option>Manutenção preventiva</option><option>Controle de pragas</option>
-              <option>Licença sanitária</option><option>PCMSO / PGR</option><option>PMOC</option>
-              <option>Certificado de treinamento</option><option>POP / Procedimento</option><option>Outro</option>
+              <option>Controle Microbiológico da Água</option>
+              <option>Calibração de equipamento</option>
+              <option>Manutenção preventiva</option>
+              <option>Controle de pragas e vetores</option>
+              <option>Licença sanitária</option>
+              <option>PCMSO</option><option>PGR</option><option>PMOC</option>
+              <option>LTCAT / LTP / LTI</option>
+              <option>Certificado de treinamento</option>
+              <option>Controle reagente</option>
+              <option>Outro</option>
             </select>
           </div>
-          <div class="fg"><label class="fl">Descrição</label><input type="text" id="up-desc" placeholder="ex: Controle Microbiológico Mai/2026"></div>
+          <div class="fg"><label class="fl">Descrição</label><input type="text" id="up-desc" placeholder="ex: Controle Microbiológico Água Mai/2026"></div>
         </div>
         <div class="fr">
           <div class="fg"><label class="fl">Data de emissão</label><input type="date" id="up-emissao"></div>
           <div class="fg"><label class="fl">Data de vencimento</label><input type="date" id="up-venc"></div>
         </div>
-        <div class="fg"><label class="fl">Arquivo</label>
-          <div class="uz" id="up-zone" onclick="document.getElementById('upFile').click()" ondragover="dropZone(event)" ondragleave="dropLeave()" ondrop="handleDrop(event)">
+        <div class="fg"><label class="fl">Arquivo (PDF, DOCX, XLSX)</label>
+          <div class="uz" id="up-zone" onclick="document.getElementById('upFile').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event)">
             <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             <div style="font-size:13px;font-weight:500;color:var(--tx2)">Arraste o arquivo ou clique para selecionar</div>
             <div style="font-size:11px;color:var(--tx3);margin-top:3px">PDF, DOCX, XLSX</div>
-            <input type="file" id="upFile" style="display:none" accept=".pdf,.docx,.xlsx" onchange="handleFile(this)">
+            <input type="file" id="upFile" style="display:none" accept=".pdf,.docx,.xlsx" onchange="setUpFile(this)">
           </div>
           <div id="up-fname" style="font-size:12px;color:var(--gn);margin-top:6px"></div>
         </div>
-        <button class="bp" onclick="fazerUpload()">Enviar</button>
+        <button class="bp" onclick="fazerUpload()">Enviar documento</button>
         <span id="up-fb" style="margin-left:10px;font-size:12px"></span>
       </div>
       <div class="cd"><div class="ct">Documentos enviados</div><div id="up-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
@@ -430,12 +593,12 @@ textarea{resize:vertical;min-height:70px}
 
     <!-- LOG -->
     <div class="pg" id="pg-log">
-      <div class="ph"><div class="pt">Registro de atividades</div><div class="ps">Rastreabilidade — quem fez o quê e quando</div></div>
+      <div class="ph"><div class="pt">Registro de atividades</div><div class="ps">Rastreabilidade completa — quem fez o quê e quando</div></div>
       <div class="cd" style="margin-bottom:12px">
         <div class="fr">
-          <div class="fg"><label class="fl">Filtrar usuário</label>
+          <div class="fg"><label class="fl">Filtrar colaboradora</label>
             <select id="log-user" onchange="carregarLog()">
-              <option value="">Todos</option>
+              <option value="">Todas</option>
               <option>Luiza Manfroi de Mattos</option><option>Liege Manfroi de Mattos</option>
               <option>Dulcemeri Pessetti Dario</option><option>Ana Caroline Braz Nascimento</option>
               <option>Luana Brandalise</option><option>Luciane</option>
@@ -444,8 +607,9 @@ textarea{resize:vertical;min-height:70px}
           <div class="fg"><label class="fl">Filtrar módulo</label>
             <select id="log-mod" onchange="carregarLog()">
               <option value="">Todos</option>
-              <option>documentos</option><option>cq</option><option>temperaturas</option>
-              <option>limpezas</option><option>upload</option><option>proex</option><option>usuarios</option>
+              <option>pq</option><option>cq-hemato</option><option>cq-interno</option>
+              <option>cq-externo</option><option>temperaturas</option><option>limpezas</option>
+              <option>treinamentos</option><option>upload</option><option>usuarios</option>
             </select>
           </div>
         </div>
@@ -453,143 +617,35 @@ textarea{resize:vertical;min-height:70px}
       <div class="cd"><div id="log-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div></div>
     </div>
 
-    <!-- CQI BIOQUÍMICA -->
-    <div class="pg" id="pg-bio-cqi">
-      <div class="ph"><div class="pt">CQI Bioquímica — URIT 8021A</div><div class="ps">12 analitos · Levey-Jennings</div></div>
-      <div class="cd" style="margin-bottom:12px"><div class="ag" id="analito-grid"></div></div>
-      <div class="cd" style="margin-bottom:12px">
-        <div class="ct" id="cqi-titulo">Glicose — Levey-Jennings</div>
-        <div style="margin-bottom:10px"><label class="fl">Nível</label><select id="bio-nivel" onchange="renderCQIChart()" style="max-width:160px"><option value="1">Nível 1</option><option value="2">Nível 2</option></select></div>
-        <div class="cw"><canvas id="cqiChart"></canvas></div>
-        <div id="cqi-stats" style="display:flex;gap:14px;font-size:12px;color:var(--tx2);margin-top:8px;flex-wrap:wrap"></div>
-      </div>
-      <div class="cd">
-        <div class="ct">Lançar resultado — <span id="bio-analito">Glicose</span></div>
-        <div class="fr">
-          <div class="fg"><label class="fl">Data</label><input type="date" id="bio-data"></div>
-          <div class="fg"><label class="fl">Responsável</label><input type="text" id="resp-bio" readonly></div>
-        </div>
-        <div class="fr">
-          <div class="fg"><label class="fl">Valor Nível 1</label><input type="number" step="0.01" id="bio-n1" placeholder="ex: 100.5"></div>
-          <div class="fg"><label class="fl">Valor Nível 2</label><input type="number" step="0.01" id="bio-n2" placeholder="ex: 350.0"></div>
-        </div>
-        <div class="fg"><label class="fl">Lote</label><input type="text" id="bio-lote" placeholder="ex: LOT-2026-05"></div>
-        <button class="bp" onclick="salvarCQI()">Salvar</button>
-        <span id="bio-fb" style="margin-left:10px;font-size:12px"></span>
-      </div>
-    </div>
-
-    <!-- PRO-EX DASHBOARD -->
-    <div class="pg" id="pg-proex-dash">
-      <div class="ph"><div class="pt">PRO-EX — Dashboard</div><div class="ps">Avaliação Externa PNCQ · Lotes 448–500</div></div>
-      <div class="kg">
-        <div class="kp bl"><div class="kv">53</div><div class="kl">Ciclos registrados</div></div>
-        <div class="kp ok"><div class="kv">16</div><div class="kl">100% acerto</div></div>
-        <div class="kp dg"><div class="kv">37</div><div class="kl">Com inaceitáveis</div></div>
-        <div class="kp" style="background:#f0e8fa"><div class="kv" style="color:#5a1a8a">501</div><div class="kl">Próximo ciclo</div></div>
-      </div>
-      <div class="g2">
-        <div class="cd"><div class="ct">Analitos com mais inaceitáveis</div><div class="cws"><canvas id="px-analitos"></canvas></div></div>
-        <div class="cd"><div class="ct">Tendência anual</div><div class="cws"><canvas id="px-tendencia"></canvas></div></div>
-      </div>
-    </div>
-
-    <!-- PRO-EX LANÇAR -->
-    <div class="pg" id="pg-proex-lancar">
-      <div class="ph"><div class="pt">Lançar ciclo PRO-EX</div><div class="ps">Próximo: Maio/2026 — Lote 501</div></div>
-      <div class="cd" style="margin-bottom:12px">
-        <div class="fr">
-          <div class="fg"><label class="fl">Lote PNCQ</label><input type="number" id="px-lote" value="501"></div>
-          <div class="fg"><label class="fl">Data resultado</label><input type="date" id="px-data"></div>
-        </div>
-      </div>
-      <div class="cd" style="margin-bottom:12px">
-        <div class="ct">Resultados por analito — ID calculado automaticamente</div>
-        <div id="px-analitos-form"></div>
-        <button class="bx" onclick="addPxAnalito('')" style="margin-top:8px;padding:6px 14px">+ Adicionar analito</button>
-      </div>
-      <div class="cd">
-        <div class="ct">Ações corretivas</div>
-        <div class="fr">
-          <div class="fg"><label class="fl">Analitos inaceitáveis</label><input type="text" id="px-inac" placeholder="ex: Colesterol, TGO"></div>
-          <div class="fg"><label class="fl">Medida corretiva</label><input type="text" id="px-corr" placeholder="ex: Reajuste com controles"></div>
-        </div>
-        <div class="fg"><label class="fl">Observações</label><textarea id="px-obs" placeholder="CQI interno estava dentro dos parâmetros..."></textarea></div>
-        <button class="bp" onclick="salvarCiclo()">Salvar ciclo</button>
-        <span id="px-fb" style="margin-left:10px;font-size:12px"></span>
-      </div>
-    </div>
-
-    <!-- PRO-EX HISTÓRICO -->
-    <div class="pg" id="pg-proex-hist">
-      <div class="ph"><div class="pt">Histórico PRO-EX</div><div class="ps">Lotes 448–500 · 2021–2026</div></div>
-      <div class="tb">
-        <div class="tt active" onclick="tabHist('h26',this)">2026</div>
-        <div class="tt" onclick="tabHist('h25',this)">2025</div>
-        <div class="tt" onclick="tabHist('h24',this)">2024</div>
-        <div class="tt" onclick="tabHist('h23',this)">2023</div>
-        <div class="tt" onclick="tabHist('h22',this)">2022</div>
-        <div class="tt" onclick="tabHist('h21',this)">2021</div>
-      </div>
-      <div id="h26"><div class="cd"><div class="px">
-        <div class="pe ok"><div class="peh"><span class="bk bk-ok">Lote 500</span><span class="ped">Abr/2026</span></div><div class="peb">100% acerto</div></div>
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 499</span><span class="ped">Mar/2026</span></div><div class="peb">TGO · Educação continuada · Urinálise</div><div class="pea">AC: Reajuste com controles / Revisão de conteúdo</div></div>
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 498</span><span class="ped">Fev/2026</span></div><div class="peb">Colesterol · Coombs direto</div><div class="pea">AC: Reajuste com controles — CQI interno ok</div></div>
-        <div class="pe ok"><div class="peh"><span class="bk bk-ok">Lote 497</span><span class="ped">Jan/2026</span></div><div class="peb">100% acerto</div></div>
-      </div></div></div>
-      <div id="h25" style="display:none"><div class="cd"><div class="px">
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 495-496</span><span class="ped">Nov-Dez/2025</span></div><div class="peb">Fosfatase alcalina · Parasitologia</div><div class="pea">AC: Reajuste com controles / Revisão</div></div>
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 493</span><span class="ped">Set/2025</span></div><div class="peb">Creatinina · TGO · Urinálise · Urinálise virtual</div><div class="pea">AC: Revisão e calibração</div></div>
-        <div class="pe ok"><div class="peh"><span class="bk bk-ok">Lote 492</span><span class="ped">Ago/2025</span></div><div class="peb">100% acerto</div></div>
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 487</span><span class="ped">Mar/2025</span></div><div class="peb">RDW</div><div class="pea">AC: Revisão com controles — CQI interno ok</div></div>
-        <div class="pe ok"><div class="peh"><span class="bk bk-ok">Lote 485-486</span><span class="ped">Jan-Fev/2025</span></div><div class="peb">100% acerto</div></div>
-      </div></div></div>
-      <div id="h24" style="display:none"><div class="cd"><div class="px">
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 482</span><span class="ped">Out/2024</span></div><div class="peb">Colesterol · VDRL · Urinálise: bactérias</div><div class="pea">AC: Reajuste / Troca de reagente</div></div>
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 473</span><span class="ped">Jan/2024</span></div><div class="peb">Amilase · Bilirrubina · CPK · Ferro · Colesterol</div><div class="pea">AC: Reajuste com controle em todos — CQI interno ok</div></div>
-      </div></div></div>
-      <div id="h23" style="display:none"><div class="cd"><div class="px">
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 471</span><span class="ped">Nov/2023</span></div><div class="peb">HDL · Reticulócitos virtual · Urinálise virtual</div></div>
-        <div class="pe ok"><div class="peh"><span class="bk bk-ok">Lote 464-468</span><span class="ped">Abr-Ago/2023</span></div><div class="peb">100% acerto</div></div>
-      </div></div></div>
-      <div id="h22" style="display:none"><div class="cd"><div class="px">
-        <div class="pe ok"><div class="peh"><span class="bk bk-ok">Lote 454-455</span><span class="ped">Jun-Jul/2022</span></div><div class="peb">100% acerto</div></div>
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 449</span><span class="ped">Jan/2022</span></div><div class="peb">Hemácias · Hemoglobina</div></div>
-      </div></div></div>
-      <div id="h21" style="display:none"><div class="cd"><div class="px">
-        <div class="pe wn"><div class="peh"><span class="bk bk-wn">Lote 448</span><span class="ped">Dez/2021</span></div><div class="peb">CK · Fosfatase alc. · Glicose · TGP · Ureia — Manutenção corretiva: troca lâmpada espectrofotômetro</div></div>
-      </div></div></div>
-    </div>
-
     <!-- USUÁRIOS -->
     <div class="pg" id="pg-usuarios">
-      <div class="ph"><div class="pt">Gestão de usuários</div><div class="ps">Apenas administradores têm acesso</div></div>
+      <div class="ph"><div class="pt">Gestão de usuários</div><div class="ps">Somente administradoras têm acesso a este módulo</div></div>
       <div class="cd" style="margin-bottom:12px">
-        <div class="ct">Usuários cadastrados</div>
+        <div class="ct">Usuárias cadastradas</div>
         <div id="usr-lista"><div style="color:var(--tx3);font-size:13px">Carregando...</div></div>
         <span id="usr-fb" style="font-size:12px;margin-top:8px;display:block"></span>
       </div>
       <div class="cd">
-        <div class="ct">Novo usuário</div>
+        <div class="ct">Adicionar nova usuária</div>
         <div class="fr">
           <div class="fg"><label class="fl">Nome completo</label><input type="text" id="new-nome" placeholder="Nome completo"></div>
-          <div class="fg"><label class="fl">Email</label><input type="email" id="new-email" placeholder="email@labmattos.com.br"></div>
+          <div class="fg"><label class="fl">Email de acesso</label><input type="email" id="new-email" placeholder="email@labmattos.com.br"></div>
         </div>
         <div class="fr">
           <div class="fg"><label class="fl">Cargo</label>
             <select id="new-cargo">
               <option>Responsável Técnica</option><option>Administradora / Responsável Técnica</option>
               <option>Biomédica</option><option>Bioquímica</option>
-              <option>Técnica de Laboratório</option><option>Recepção</option><option>Auxiliar</option>
+              <option>Técnica de Laboratório</option><option>Recepção</option><option>Auxiliar de Laboratório</option>
             </select>
           </div>
           <div class="fg"><label class="fl">Senha inicial</label><input type="text" id="new-senha" placeholder="ex: nome2026"></div>
         </div>
         <div class="fg" style="display:flex;align-items:center;gap:8px">
           <input type="checkbox" id="new-admin" style="width:auto">
-          <label class="fl" style="margin:0">Administradora (acesso ao painel de usuários)</label>
+          <label class="fl" style="margin:0;text-transform:none;letter-spacing:0;font-size:13px">Administradora (acesso ao painel de usuários)</label>
         </div>
-        <button class="bp" onclick="criarUsuario()">Criar usuário</button>
+        <button class="bp" onclick="criarUsuario()">Criar usuária</button>
       </div>
     </div>
 
@@ -599,328 +655,258 @@ textarea{resize:vertical;min-height:70px}
 <script>
 var U='https://oxqjiqjiiiqmgxkuvvpa.supabase.co';
 var K='sb_publishable_NlQjCWMIKlCbvOhRBgDaYQ__Hina1jR';
-var usr=null;
-var docId=null;
-var upFile=null;
-var selAnalito=0;
-var chartCQI=null,chartHem=null,chartAn=null,chartTd=null;
+var usr=null,docId=null,upFile=null,selAnalito=0;
+var charts={};
 
 // DB
 var db={
-  g:async function(t,p){
-    var r=await fetch(U+'/rest/v1/'+t+'?'+(p||''),{headers:{apikey:K,Authorization:'Bearer '+K}});
-    if(!r.ok)throw new Error(await r.text());
-    return r.json();
-  },
-  p:async function(t,d){
-    var r=await fetch(U+'/rest/v1/'+t,{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify(d)});
-    if(!r.ok)throw new Error(await r.text());
-    return r.json();
-  },
-  u:async function(t,q,d){
-    var r=await fetch(U+'/rest/v1/'+t+'?'+q,{method:'PATCH',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'},body:JSON.stringify(d)});
-    return r.ok;
-  }
+  g:async function(t,p){var r=await fetch(U+'/rest/v1/'+t+'?'+(p||''),{headers:{apikey:K,Authorization:'Bearer '+K}});if(!r.ok)throw new Error(await r.text());return r.json();},
+  p:async function(t,d){var r=await fetch(U+'/rest/v1/'+t,{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify(d)});if(!r.ok)throw new Error(await r.text());return r.json();},
+  u:async function(t,q,d){var r=await fetch(U+'/rest/v1/'+t+'?'+q,{method:'PATCH',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'},body:JSON.stringify(d)});return r.ok;}
 };
 
 // HELPERS
-function fb(id,msg,cor){
-  var el=document.getElementById(id);
-  if(!el)return;
-  el.textContent=msg;
-  el.style.color=cor||'var(--gn)';
-  setTimeout(function(){el.textContent='';},4000);
-}
-function ini(id,val){
-  var el=document.getElementById(id);
-  if(el)el.value=val||'';
-}
-function gel(id){return document.getElementById(id);}
-function gval(id){var e=gel(id);return e?e.value:'';}
+function el(id){return document.getElementById(id);}
+function val(id){var e=el(id);return e?e.value:'';}
+function set(id,v){var e=el(id);if(e)e.value=v||'';}
+function fb(id,msg,cor){var e=el(id);if(!e)return;e.textContent=msg;e.style.color=cor||'var(--gn)';setTimeout(function(){e.textContent='';},4000);}
 function fmt(d){return d?new Date(d).toLocaleDateString('pt-BR'):'—';}
-function fmtdt(d){if(!d)return '—';var dt=new Date(d);return dt.toLocaleDateString('pt-BR')+' '+dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
-function avt(nm){return (nm||'?').split(' ').map(function(n){return n[0];}).slice(0,2).join('');}
-function dias(d){if(!d)return null;return Math.ceil((new Date(d)-new Date())/(86400000));}
+function fmtdt(d){if(!d)return'—';var dt=new Date(d);return dt.toLocaleDateString('pt-BR')+' '+dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+function avt(nm){return(nm||'?').split(' ').map(function(n){return n[0];}).slice(0,2).join('');}
+function dias(d){if(!d)return null;return Math.ceil((new Date(d)-new Date())/86400000);}
+function dkill(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 
 // LOGIN
 async function fazerLogin(){
-  var email=gval('le');
-  var senha=gval('ls');
-  var btn=gel('lbtn');
-  var err=gel('lerr');
+  var email=val('le'),senha=val('ls'),btn=el('lbtn'),err=el('lerr');
   err.textContent='';
   if(!email){err.textContent='Selecione seu nome.';return;}
   if(!senha){err.textContent='Digite sua senha.';return;}
   btn.disabled=true;btn.textContent='Verificando...';
   try{
-    var res=await fetch(U+'/rest/v1/usuarios?email=eq.'+encodeURIComponent(email)+'&ativo=eq.true&select=id,nome,email,cargo,admin,senha_hash',{headers:{apikey:K,Authorization:'Bearer '+K}});
-    if(!res.ok){err.textContent='Erro de conexão ('+res.status+').';btn.disabled=false;btn.textContent='Entrar';return;}
-    var u=await res.json();
-    if(!u.length){err.textContent='Usuário não encontrado ou inativo.';btn.disabled=false;btn.textContent='Entrar';return;}
+    var r=await fetch(U+'/rest/v1/usuarios?email=eq.'+encodeURIComponent(email)+'&ativo=eq.true&select=id,nome,email,cargo,admin,senha_hash',{headers:{apikey:K,Authorization:'Bearer '+K}});
+    if(!r.ok){err.textContent='Erro de conexão.';btn.disabled=false;btn.textContent='Entrar';return;}
+    var u=await r.json();
+    if(!u.length){err.textContent='Usuário não encontrado.';btn.disabled=false;btn.textContent='Entrar';return;}
     if(u[0].senha_hash!==senha){err.textContent='Senha incorreta.';btn.disabled=false;btn.textContent='Entrar';return;}
-    usr=u[0];
-    iniciarApp();
+    usr=u[0];iniciarApp();
     try{db.u('usuarios','id=eq.'+usr.id,{ultimo_acesso:new Date().toISOString()});}catch(e){}
     try{log('logou','sistema','Login');}catch(e){}
-  }catch(e){
-    err.textContent='Erro: '+e.message;
-    btn.disabled=false;btn.textContent='Entrar';
-  }
+  }catch(e){err.textContent='Erro: '+e.message;btn.disabled=false;btn.textContent='Entrar';}
 }
 
 function iniciarApp(){
-  gel('loginScreen').style.display='none';
-  gel('appMain').style.display='flex';
-  // Sidebar
-  gel('uav').textContent=avt(usr.nome);
-  gel('unm').textContent=usr.nome.split(' ').slice(0,2).join(' ');
-  gel('ucg').textContent=usr.cargo||'';
-  // Preencher campos de responsável
-  ['resp-cq','resp-temp','resp-limp','resp-bio'].forEach(function(id){ini(id,usr.nome);});
-  // Admin
-  if(usr.admin){
-    gel('nav-admin').style.display='';
-    gel('nav-usuarios').style.display='';
-  }
+  el('loginScreen').style.display='none';el('appMain').style.display='flex';
+  el('uav').textContent=avt(usr.nome);
+  el('unm').textContent=usr.nome.split(' ').slice(0,2).join(' ');
+  el('ucg').textContent=usr.cargo||'';
+  ['resp-cq','resp-temp','resp-limp'].forEach(function(id){set(id,usr.nome);});
+  if(usr.admin){el('nav-admin').style.display='';el('nav-usuarios').style.display='';}
   carregarDashboard();
 }
 
 function logout(){
-  try{log('logout','sistema','Logout');}catch(e){}
-  usr=null;
-  gel('loginScreen').style.display='flex';
-  gel('appMain').style.display='none';
-  ini('ls','');gel('lerr').textContent='';
-  gel('lbtn').disabled=false;gel('lbtn').textContent='Entrar';
+  try{log('logout','sistema','');}catch(e){}
+  usr=null;el('loginScreen').style.display='flex';el('appMain').style.display='none';
+  set('ls','');el('lerr').textContent='';el('lbtn').disabled=false;el('lbtn').textContent='Entrar';
 }
 
-// LOG
-async function log(acao,mod,det,itemNome){
+async function log(acao,mod,det,nm){
   if(!usr)return;
-  await db.p('log_atividades',{usuario_id:usr.id,usuario_nome:usr.nome,acao:acao,modulo:mod,item_nome:itemNome||'',detalhes:det||''});
+  try{await db.p('log_atividades',{usuario_id:usr.id,usuario_nome:usr.nome,acao:acao,modulo:mod,item_nome:nm||'',detalhes:det||''});}catch(e){}
 }
 
-// NAV
-function nav(id,el){
+// NAVEGAÇÃO
+function nav(id,el2){
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('active');});
-  var pg=gel('pg-'+id);
-  if(!pg)return;
-  pg.classList.add('active');
-  el.classList.add('active');
-  var loads={
-    'dashboard':carregarDashboard,
-    'documentos':function(){carregarDocumentos(null);},
-    'vencimentos':carregarVencimentos,
-    'cq':function(){setTimeout(renderHematoChart,80);},
-    'temperaturas':carregarTemps,
-    'limpezas':carregarLimpezas,
-    'log':carregarLog,
-    'upload':carregarUploads,
-    'bio-cqi':function(){setTimeout(function(){buildAnalitos();renderCQIChart();},80);},
-    'proex-dash':function(){setTimeout(renderProEXCharts,80);},
+  var pg=el('pg-'+id);if(!pg)return;
+  pg.classList.add('active');el2.classList.add('active');
+  var m={dashboard:carregarDashboard,pq:function(){carregarPQ(null);},
+    'cq-interno':function(){setTimeout(function(){buildAnalitos();renderCQIChart();},80);},
+    'cq-hemato':function(){setTimeout(renderHematoChart,80);},
+    'cq-externo':carregarProEX,
+    temperaturas:carregarTemps,limpezas:carregarLimpezas,
+    treinamentos:carregarTreinamentos,certificados:carregarCertificados,
+    vencimentos:carregarVencimentos,upload:carregarUploads,
+    log:carregarLog,usuarios:carregarUsuarios,
     'proex-lancar':buildAnalitoLancar,
-    'usuarios':carregarUsuarios
+    'proex-hist':function(){}
   };
-  if(loads[id])loads[id]();
+  if(m[id])m[id]();
   try{log('acessou',id,'');}catch(e){}
 }
 
-function tab(grupo,id,el){
-  el.closest('.tb').querySelectorAll('.tt').forEach(function(t){t.classList.remove('active');});
-  el.classList.add('active');
+function tabMenu(grupo,id,el2){
+  el2.closest('.tb').querySelectorAll('.tt').forEach(function(t){t.classList.remove('active');});
+  el2.classList.add('active');
   document.querySelectorAll('.tab-'+grupo).forEach(function(t){t.style.display='none';});
-  var tg=gel('tab-'+grupo+'-'+id);
-  if(tg)tg.style.display='block';
+  var tg=el('tab-'+grupo+'-'+id);if(tg)tg.style.display='';
 }
 
-function tabHist(id,el){
-  el.closest('.tb').querySelectorAll('.tt').forEach(function(t){t.classList.remove('active');});
-  el.classList.add('active');
-  ['h26','h25','h24','h23','h22','h21'].forEach(function(i){var e=gel(i);if(e)e.style.display='none';});
-  var sh=gel(id);if(sh)sh.style.display='block';
+function tabHist(id,el2){
+  el2.closest('.tb').querySelectorAll('.tt').forEach(function(t){t.classList.remove('active');});
+  el2.classList.add('active');
+  ['h26','h25','h24','h23','h22','h21'].forEach(function(i){var e=el(i);if(e)e.style.display='none';});
+  var sh=el(id);if(sh)sh.style.display='block';
 }
 
 // DASHBOARD
 async function carregarDashboard(){
   try{
     var docs=await db.g('documentos','select=id,status');
-    var laudos=await db.g('laudos_vencimento','select=id,status,data_vencimento,descricao&order=data_vencimento.asc&limit=5');
-    var ativs=await db.g('log_atividades','select=*&order=criado_em.desc&limit=6');
-    var vencendo=laudos.filter(function(l){var d=dias(l.data_vencimento);return d!==null&&d<=60;}).length;
-    var el;
-    el=gel('kv-docs');if(el)el.textContent=docs.length;
-    el=gel('kv-venc');if(el)el.textContent=vencendo;
-    el=gel('kv-rev');if(el)el.textContent=docs.filter(function(d){return d.status==='revisao';}).length;
-    el=gel('nb-venc');if(el)el.textContent=vencendo;
+    var laudos=await db.g('laudos_vencimento','select=id,status,data_vencimento,descricao,tipo&order=data_vencimento.asc&limit=6');
+    var ativs=await db.g('log_atividades','select=*&order=criado_em.desc&limit=8');
+    var venc=laudos.filter(function(l){var d=dias(l.data_vencimento);return d!==null&&d<=60;}).length;
+    var kpis={docs:docs.length,venc:venc,rev:docs.filter(function(d){return d.status==='revisao';}).length};
+    ['docs','venc','rev'].forEach(function(k){var e=el('kv-'+k);if(e)e.textContent=kpis[k];});
+    var nv=el('nb-venc');if(nv)nv.textContent=venc;
     // Vencimentos
-    var cv=gel('dash-venc');
-    if(cv)cv.innerHTML=laudos.map(function(l){
+    var cv=el('dash-venc');
+    if(cv)cv.innerHTML=laudos.length?laudos.map(function(l){
       var d=dias(l.data_vencimento);
       var cls=d===null?'gy':d<0?'dg':d<=30?'dg':d<=60?'wn':'ok';
       var txt=d===null?'—':d<0?'Vencido':d+'d';
-      return '<div class="rw"><span class="bk bk-'+cls+'" style="min-width:50px;justify-content:center">'+txt+'</span><span class="rn">'+l.descricao+'</span></div>';
-    }).join('')||'<div style="color:var(--tx3);font-size:13px">Nenhum cadastrado</div>';
-    // Log
-    var ca=gel('dash-ativ');
-    if(ca)ca.innerHTML=ativs.map(function(l){
+      return '<div class="rw"><span class="bk bk-'+cls+'" style="min-width:52px;justify-content:center">'+txt+'</span><span class="rn">'+l.descricao+'</span></div>';
+    }).join(''):'<div style="color:var(--tx3);font-size:13px">Nenhum cadastrado ainda</div>';
+    // Atividades
+    var ca=el('dash-ativ');
+    if(ca)ca.innerHTML=ativs.length?ativs.map(function(l){
       return '<div class="li2"><div class="lav">'+avt(l.usuario_nome)+'</div><div class="lt2"><b>'+((l.usuario_nome||'').split(' ')[0])+'</b> '+l.acao+(l.item_nome?' — '+l.item_nome:'')+'</div><div class="ltm">'+fmtdt(l.criado_em)+'</div></div>';
-    }).join('')||'<div style="color:var(--tx3);font-size:13px">Sem atividades</div>';
+    }).join(''):'<div style="color:var(--tx3);font-size:13px">Sem atividades ainda</div>';
   }catch(e){console.log('Dashboard erro:',e);}
 }
 
-// DOCUMENTOS
-var todosDoc=[];
-async function carregarDocumentos(area){
-  var cont=gel('doc-lista');
-  if(!cont)return;
+// PQ - PROCEDIMENTOS DA QUALIDADE
+var todosPQ=[];
+async function carregarPQ(setor){
+  var cont=el('pq-lista');if(!cont)return;
   cont.innerHTML='<div style="color:var(--tx3);font-size:13px;padding:16px 0">Carregando...</div>';
   try{
     var p='select=*&order=area.asc,codigo.asc';
-    if(area==='licencas'||area==='seguranca')p='select=*&categoria=eq.'+area+'&order=titulo.asc';
-    else if(area)p='select=*&area=eq.'+encodeURIComponent(area)+'&order=codigo.asc';
-    todosDoc=await db.g('documentos',p);
-    renderDocs(todosDoc);
+    if(setor&&setor!=='todos')p='select=*&area=eq.'+encodeURIComponent(setor)+'&order=codigo.asc';
+    todosPQ=await db.g('documentos',p);
+    renderPQ(todosPQ);
   }catch(e){cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro ao carregar.</div>';}
 }
 
-function renderDocs(docs){
-  var cont=gel('doc-lista');
-  if(!cont)return;
+function renderPQ(docs){
+  var cont=el('pq-lista');if(!cont)return;
   if(!docs.length){cont.innerHTML='<div style="color:var(--tx3);font-size:13px;padding:16px 0">Nenhum documento encontrado.</div>';return;}
-  cont.innerHTML=docs.map(function(d){
-    var tp=d.tipo||'POP';
-    var cls=tp==='PDF'||tp==='pdf'?'pdf':tp==='MAN'?'doc':tp==='xlsx'?'xls':'pop';
-    var bk=d.status==='revisao'?'<span class="bk bk-rv">Em revisão</span>':d.status==='modelo'?'<span class="bk bk-gy">Modelo</span>':'<span class="bk bk-ok">Controlado</span>';
-    var cod=(d.codigo||tp||'DOC').substring(0,4);
-    return '<div class="di" onclick="abrirDoc(\''+d.id+'\',\''+d.titulo.replace(/'/g,"\\'")+'\')">'
-      +'<div class="dico '+cls+'">'+cod+'</div>'
-      +'<div style="flex:1;min-width:0"><div class="dit">'+d.titulo+'</div>'
-      +'<div class="dim">'+(d.codigo||'')+(d.area?' · '+d.area:'')+(d.revisao?' · Rev.'+d.revisao:'')+'</div></div>'
-      +'<div style="display:flex;align-items:center;gap:6px">'+bk+'<span class="bx">Abrir</span></div>'
-      +'</div>';
-  }).join('');
+  // Agrupar por área
+  var grupos={};
+  docs.forEach(function(d){
+    var area=d.area||'Geral';
+    if(!grupos[area])grupos[area]=[];
+    grupos[area].push(d);
+  });
+  var html='';
+  Object.keys(grupos).sort().forEach(function(area){
+    html+='<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin:14px 0 6px">'+area+'</div>';
+    grupos[area].forEach(function(d){
+      var rev=d.status==='revisao';
+      var bk=rev?'<span class="bk bk-rv">Em revisão</span>':'<span class="bk bk-ok">Controlado</span>';
+      html+='<div class="di" onclick="abrirDoc(\''+d.id+'\',\''+d.titulo.replace(/'/g,"\\'")+'\')"><div class="dico pop">PQ</div>'
+        +'<div style="flex:1;min-width:0"><div class="dit">'+d.titulo+'</div>'
+        +'<div class="dim">'+(d.codigo||'')+(d.revisao?' · Rev.'+d.revisao:'')+(rev?' · 🔄 Em revisão':'')+'</div></div>'
+        +'<div style="display:flex;align-items:center;gap:6px">'+bk+'<span class="bx">Abrir</span></div></div>';
+    });
+  });
+  cont.innerHTML=html;
 }
 
-function filtrarDocs(){
-  var q=(gval('doc-busca')||'').toLowerCase();
-  renderDocs(todosDoc.filter(function(d){return d.titulo.toLowerCase().includes(q)||(d.codigo||'').toLowerCase().includes(q)||(d.area||'').toLowerCase().includes(q);}));
+function filtrarPQ(){
+  var q=(val('pq-busca')||'').toLowerCase();
+  renderPQ(todosPQ.filter(function(d){return d.titulo.toLowerCase().includes(q)||(d.codigo||'').toLowerCase().includes(q);}));
 }
 
-function tabDoc(area,el){
-  el.closest('.tb').querySelectorAll('.tt').forEach(function(t){t.classList.remove('active');});
-  el.classList.add('active');
-  carregarDocumentos(area==='todos'?null:area);
+function tabPQ(setor,el2){
+  el2.closest('.tb').querySelectorAll('.tt').forEach(function(t){t.classList.remove('active');});
+  el2.classList.add('active');
+  carregarPQ(setor);
 }
 
-// MODAL DE DOCUMENTO
+// MODAL DOCUMENTO
 async function abrirDoc(id,titulo){
   docId=id;
-  gel('m-titulo').textContent=titulo;
-  gel('m-meta').textContent='Carregando...';
-  gel('docModal').classList.add('open');
-  gel('m-btn-salvar').style.display='none';
-  gel('m-btn-leitura').style.display='inline-flex';
-  gel('m-btn-leitura').textContent='✓ Confirmar leitura';
-  gel('m-btn-leitura').style.background='';
-  gel('m-feedback').textContent='';
-  gel('m-leituras').textContent='';
-  gel('m-body').innerHTML='<div style="color:var(--tx3)">Carregando...</div>';
+  el('m-titulo').textContent=titulo;
+  el('m-meta').textContent='Carregando...';
+  el('docModal').classList.add('open');
+  el('m-btn-salvar').style.display='none';
+  el('m-btn-leitura').style.display='inline-flex';
+  el('m-btn-leitura').textContent='✓ Confirmar leitura';
+  el('m-btn-leitura').style.background='';
+  el('m-feedback').textContent='';el('m-leituras').textContent='';
+  el('m-body').innerHTML='<div style="color:var(--tx3)">Carregando...</div>';
   try{
     var docs=await db.g('documentos','id=eq.'+id+'&select=*');
     var d=docs[0];
-    gel('m-meta').textContent=(d.codigo||'')+(d.area?' · '+d.area:'')+(d.revisao?' · Rev.'+d.revisao:'')+(d.status?' · '+d.status:'');
+    el('m-meta').textContent=(d.codigo||'')+(d.area?' · '+d.area:'')+(d.revisao?' · Rev.'+d.revisao:'')+(d.status?' · '+d.status:'');
     var leituras=await db.g('leituras_treinamento','documento_id=eq.'+id+'&select=usuario_nome,lido_em&order=lido_em.desc');
     var jaLeu=leituras.some(function(l){return l.usuario_nome===usr.nome;});
-    if(jaLeu){gel('m-btn-leitura').textContent='✓ Você já confirmou leitura';gel('m-btn-leitura').style.background='var(--gn)';}
-    gel('m-leituras').textContent=leituras.length?'Leituras: '+leituras.slice(0,3).map(function(l){return l.usuario_nome.split(' ')[0]+' ('+fmt(l.lido_em)+')';}).join(', '):'Nenhuma leitura';
+    if(jaLeu){el('m-btn-leitura').textContent='✓ Você já leu';el('m-btn-leitura').style.background='var(--gn)';}
+    el('m-leituras').textContent=leituras.length?'Leituras: '+leituras.slice(0,3).map(function(l){return l.usuario_nome.split(' ')[0]+' ('+fmt(l.lido_em)+')';}).join(', '):'Nenhuma leitura';
     if(d.conteudo){
-      gel('m-body').innerHTML='<textarea class="ed" id="doc-editor">'+d.conteudo+'</textarea>';
-      gel('m-btn-salvar').style.display='inline-flex';
+      el('m-body').innerHTML='<textarea class="ed" id="doc-editor">'+d.conteudo+'</textarea>';
+      el('m-btn-salvar').style.display='inline-flex';
     }else if(d.arquivo_url){
-      gel('m-body').innerHTML='<iframe src="'+d.arquivo_url+'" style="width:100%;height:100%;border:none;border-radius:8px"></iframe>';
+      el('m-body').innerHTML='<iframe src="'+d.arquivo_url+'" style="width:100%;height:100%;border:none;border-radius:8px"></iframe>';
     }else{
-      gel('m-body').innerHTML='<div style="background:var(--s2);border-radius:8px;padding:24px;text-align:center;color:var(--tx2)">'
-        +'<div style="font-size:32px;margin-bottom:8px">📄</div>'
+      el('m-body').innerHTML='<div style="background:var(--s2);border-radius:10px;padding:28px;text-align:center;color:var(--tx2)">'
+        +'<div style="font-size:36px;margin-bottom:10px">📄</div>'
         +'<div style="font-size:14px;font-weight:500;margin-bottom:6px">'+d.titulo+'</div>'
-        +'<div style="font-size:12px;margin-bottom:14px">Arquivo no Google Drive. Faça upload para visualizar aqui.</div>'
+        +'<div style="font-size:12px;color:var(--tx3);margin-bottom:16px">Arquivo no Google Drive.<br>Faça upload no módulo <b>Upload de laudos</b> para visualizar aqui.</div>'
         +'</div>';
     }
     log('leu','documentos',d.titulo,d.titulo);
-  }catch(e){gel('m-body').innerHTML='<div style="color:var(--tx3)">Erro: '+e.message+'</div>';}
+  }catch(e){el('m-body').innerHTML='<div style="color:var(--tx3)">Erro: '+e.message+'</div>';}
 }
-
-function fecharModal(){gel('docModal').classList.remove('open');}
+function fecharModal(){el('docModal').classList.remove('open');}
 
 async function confirmarLeitura(){
   if(!docId||!usr)return;
-  var titulo=gel('m-titulo').textContent;
+  var titulo=el('m-titulo').textContent;
   try{
     await db.p('leituras_treinamento',{documento_id:docId,documento_titulo:titulo,usuario_id:usr.id,usuario_nome:usr.nome});
-    gel('m-btn-leitura').textContent='✓ Leitura confirmada!';
-    gel('m-btn-leitura').style.background='var(--gn)';
-    gel('m-feedback').textContent='Registrado com sucesso!';
-    gel('m-feedback').style.color='var(--gn)';
+    el('m-btn-leitura').textContent='✓ Leitura confirmada!';el('m-btn-leitura').style.background='var(--gn)';
+    fb('m-feedback','✓ Registrado!');
     log('confirmou leitura','documentos',titulo,titulo);
-    setTimeout(function(){gel('m-feedback').textContent='';},3000);
-  }catch(e){gel('m-feedback').textContent='Erro: '+e.message;gel('m-feedback').style.color='var(--rd)';}
+  }catch(e){fb('m-feedback','Erro: '+e.message,'var(--rd)');}
 }
 
 async function salvarDocModal(){
-  var conteudo=gel('doc-editor')?.value||'';
-  if(!docId)return;
+  var conteudo=el('doc-editor')?.value||'';if(!docId)return;
   try{
     await db.u('documentos','id=eq.'+docId,{conteudo:conteudo,atualizado_em:new Date().toISOString(),atualizado_por:usr.nome});
-    gel('m-feedback').textContent='✓ Salvo!';gel('m-feedback').style.color='var(--gn)';
-    log('editou','documentos',gel('m-titulo').textContent,gel('m-titulo').textContent);
-    setTimeout(function(){gel('m-feedback').textContent='';},3000);
-  }catch(e){gel('m-feedback').textContent='Erro: '+e.message;gel('m-feedback').style.color='var(--rd)';}
-}
-
-// VENCIMENTOS
-async function carregarVencimentos(){
-  var cont=gel('venc-lista');
-  if(!cont)return;
-  try{
-    var laudos=await db.g('laudos_vencimento','select=*&order=data_vencimento.asc');
-    if(!laudos.length){cont.innerHTML='<div class="cd"><div style="color:var(--tx3);font-size:13px">Nenhum laudo cadastrado. Use o módulo Upload.</div></div>';return;}
-    cont.innerHTML=laudos.map(function(l){
-      var d=dias(l.data_vencimento);
-      var cls=d===null?'ok':d<0?'vd2':d<=30?'dg':d<=60?'wn':'ok';
-      var txt=d===null?'—':d<0?Math.abs(d)+'d':d===0?'Hoje':d+'d';
-      var sub=d===null?'sem vencimento':d<0?'Vencido há '+Math.abs(d)+' dias':d<=30?'Vencendo em breve':'OK';
-      return '<div class="vc" style="border-left:3px solid '+(d===null||d>60?'var(--gn)':d<=30?'var(--rd)':'var(--am)')+'">'
-        +'<div class="vd '+cls+'"><div class="vn">'+txt+'</div><div class="vl">'+(d<0?'vencido':d===0?'hoje':'dias')+'</div></div>'
-        +'<div class="vi"><div class="vt">'+l.descricao+'</div>'
-        +'<div class="vm">'+sub+' · Vencimento: '+fmt(l.data_vencimento)+(l.arquivo_nome?' · '+l.arquivo_nome:'')+'</div></div>'
-        +(l.arquivo_url?'<a href="'+l.arquivo_url+'" target="_blank"><button class="bx">Ver</button></a>':'')
-        +'</div>';
-    }).join('');
-  }catch(e){cont.innerHTML='<div class="cd"><div style="color:var(--tx3);font-size:13px">Erro: '+e.message+'</div></div>';}
+    fb('m-feedback','✓ Salvo!');
+    log('editou','documentos',el('m-titulo').textContent,el('m-titulo').textContent);
+  }catch(e){fb('m-feedback','Erro: '+e.message,'var(--rd)');}
 }
 
 // CQ HEMATOLOGIA
-var hd={wbc:{a:14.7,s:1.5,v:[15.5,13.9,14.5,14.8,14.2]},hgb:{a:13.4,s:1.0,v:[13.4,13.6,13.6,13.5,13.6]},plt:{a:195,s:22,v:[170,185,158,195,188]}};
+var HD={wbc:{a:14.7,s:1.5,v:[15.5,13.9,14.5,14.8,14.2,15.6,13.3]},hgb:{a:13.4,s:1.0,v:[13.4,13.5,13.6,13.5,13.1,13.8,13.5]},plt:{a:195,s:22,v:[170,185,158,195,188,null,null]}};
 
 function renderHematoChart(){
-  var k=gval('hem-par')||'hgb';
-  var d=hd[k];
-  var c=gel('hemChart');
-  if(!c)return;
-  if(chartHem)chartHem.destroy();
-  chartHem=new Chart(c.getContext('2d'),{
-    type:'line',
-    data:{labels:['09/05','10/05','11/05','12/05','13/05'],datasets:[{data:d.v,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',pointBackgroundColor:d.v.map(function(v){return Math.abs(v-d.a)>2*d.s?'#E24B4A':Math.abs(v-d.a)>d.s?'#EF9F27':'#1D9E75';}),pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5,tension:0.3,fill:false}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:d.a-3.5*d.s,max:d.a+3.5*d.s,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:10},callback:function(v){return v.toFixed(1);}}},x:{grid:{display:false}}}}
+  var k=val('hem-par')||'hgb';var d=HD[k];
+  var c=el('hemChart');if(!c)return;
+  dkill('hemChart');
+  var vals=d.v.filter(function(v){return v!==null;});
+  var labels=['19/03','29/04','30/04','04/05','05/05','07/05','09/05'].slice(0,vals.length);
+  charts['hemChart']=new Chart(c.getContext('2d'),{
+    type:'line',data:{labels:labels,datasets:[{data:vals,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',
+      pointBackgroundColor:vals.map(function(v){return Math.abs(v-d.a)>2*d.s?'#E24B4A':Math.abs(v-d.a)>d.s?'#EF9F27':'#1D9E75';}),
+      pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5,tension:0.3,fill:false}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{y:{min:d.a-3.5*d.s,max:d.a+3.5*d.s,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:10},callback:function(v){return v.toFixed(1);}}},x:{grid:{display:false}}}}
   });
-  var avg=d.v.reduce(function(a,b){return a+b;},0)/d.v.length;
-  var fora=d.v.filter(function(v){return Math.abs(v-d.a)>2*d.s;}).length;
-  var st=gel('hem-stats');
-  if(st)st.innerHTML='<span>Alvo: <b>'+d.a+'</b></span><span>±2s: <b>'+(d.s*2).toFixed(1)+'</b></span><span>Média: <b>'+avg.toFixed(2)+'</b></span><span style="color:'+(fora>0?'var(--rd)':'var(--gn)')+'">Fora 2S: <b>'+fora+'</b></span>';
+  var avg=vals.reduce(function(a,b){return a+b;},0)/vals.length;
+  var fora=vals.filter(function(v){return Math.abs(v-d.a)>2*d.s;}).length;
+  var st=el('hem-stats');
+  if(st)st.innerHTML='<span>Alvo: <b>'+d.a+'</b></span><span>±1S: <b>'+d.s+'</b></span><span>±2S: <b>'+(d.s*2)+'</b></span><span>Média obs.: <b>'+avg.toFixed(2)+'</b></span><span style="color:'+(fora>0?'var(--rd)':'var(--gn)')+'">Fora 2S: <b>'+fora+'</b></span>';
 }
 
 async function salvarCQHem(){
-  var wbc=gval('cq-wbc'),hgb=gval('cq-hgb'),plt=gval('cq-plt'),dt=gval('cq-dt'),lote=gval('cq-lote'),obs=gval('cq-obs');
+  var wbc=val('cq-wbc'),hgb=val('cq-hgb'),plt=val('cq-plt'),dt=val('cq-dt'),lote=val('cq-lote'),obs=val('cq-obs');
   if(!wbc&&!hgb&&!plt){fb('cq-fb','Informe ao menos um valor.','var(--rd)');return;}
   try{
     var regs=[];
@@ -929,8 +915,8 @@ async function salvarCQHem(){
     if(plt)regs.push({data:dt,analito:'PLT',area:'Hematologia',nivel:1,lote:lote,valor_obtido:parseFloat(plt),alvo:195,sd:22,responsavel:usr.nome,observacao:obs});
     await Promise.all(regs.map(function(r){return db.p('cqi_resultados',r);}));
     fb('cq-fb','✓ CQ salvo!');
-    log('lançou CQ','cq','WBC='+wbc+' HGB='+hgb+' PLT='+plt,'Hematologia '+dt);
-    ini('cq-wbc','');ini('cq-hgb','');ini('cq-plt','');
+    log('lançou CQ Hematologia','cq-hemato','WBC='+wbc+' HGB='+hgb+' PLT='+plt,'Lote '+lote);
+    set('cq-wbc','');set('cq-hgb','');set('cq-plt','');
   }catch(e){fb('cq-fb','Erro: '+e.message,'var(--rd)');}
 }
 
@@ -951,17 +937,15 @@ var AN=[
 ];
 
 function buildAnalitos(){
-  var g=gel('analito-grid');
-  if(!g||g.children.length>0)return;
+  var g=el('analito-grid');if(!g||g.children.length>0)return;
   AN.forEach(function(a,i){
-    var d=document.createElement('div');
-    d.className='ac'+(i===0?' sel':'');
-    d.innerHTML='<div class="acn">'+a.nm+'</div><div class="acv">'+a.n1.a+'</div><div class="acl">'+a.un+' · N1</div>';
+    var d=document.createElement('div');d.className='ac'+(i===0?' sel':'');
+    d.innerHTML='<div class="acn">'+a.nm+'</div><div class="acv">'+a.n1.a+'</div><div class="acl">'+a.un+'</div>';
     d.addEventListener('click',function(){
       document.querySelectorAll('.ac').forEach(function(c){c.classList.remove('sel');});
       d.classList.add('sel');selAnalito=i;
-      var t=gel('cqi-titulo');if(t)t.textContent=a.nm+' — Levey-Jennings';
-      var lt=gel('bio-analito');if(lt)lt.textContent=a.nm;
+      var t=el('cqi-titulo');if(t)t.textContent=a.nm+' — Levey-Jennings';
+      var lt=el('bio-analito');if(lt)lt.textContent=a.nm;
       renderCQIChart();
     });
     g.appendChild(d);
@@ -969,114 +953,370 @@ function buildAnalitos(){
 }
 
 function renderCQIChart(){
-  var a=AN[selAnalito];
-  var nv=gval('bio-nivel')||'1';
-  var d=nv==='1'?a.n1:a.n2;
-  var v=nv==='1'?a.v1:a.v2;
-  var c=gel('cqiChart');
-  if(!c)return;
-  if(chartCQI)chartCQI.destroy();
-  chartCQI=new Chart(c.getContext('2d'),{
-    type:'line',
-    data:{labels:['08/05','09/05','10/05','11/05','12/05','13/05','14/05'],datasets:[{data:v,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',pointBackgroundColor:v.map(function(vv){return Math.abs(vv-d.a)>2*d.s?'#E24B4A':Math.abs(vv-d.a)>d.s?'#EF9F27':'#1D9E75';}),pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5,tension:0.3,fill:false}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:d.a-3.5*d.s,max:d.a+3.5*d.s,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:10},callback:function(vv){return vv.toFixed(2);}}},x:{grid:{display:false}}}}
+  var a=AN[selAnalito];var nv=val('bio-nivel')||'1';
+  var d=nv==='1'?a.n1:a.n2;var v=nv==='1'?a.v1:a.v2;
+  var c=el('cqiChart');if(!c)return;
+  dkill('cqiChart');
+  charts['cqiChart']=new Chart(c.getContext('2d'),{
+    type:'line',data:{labels:['08/05','09/05','10/05','11/05','12/05','13/05','14/05'],datasets:[{data:v,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',
+      pointBackgroundColor:v.map(function(vv){return Math.abs(vv-d.a)>2*d.s?'#E24B4A':Math.abs(vv-d.a)>d.s?'#EF9F27':'#1D9E75';}),
+      pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5,tension:0.3,fill:false}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{y:{min:d.a-3.5*d.s,max:d.a+3.5*d.s,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:10},callback:function(vv){return vv.toFixed(2);}}},x:{grid:{display:false}}}}
   });
   var avg=v.reduce(function(a,b){return a+b;},0)/v.length;
   var fora=v.filter(function(vv){return Math.abs(vv-d.a)>2*d.s;}).length;
-  var st=gel('cqi-stats');
+  var st=el('cqi-stats');
   if(st)st.innerHTML='<span>Alvo: <b>'+d.a+' '+a.un+'</b></span><span>DP: <b>'+d.s+'</b></span><span>Média: <b>'+avg.toFixed(2)+'</b></span><span style="color:'+(fora>0?'var(--rd)':'var(--gn)')+'">Fora 2S: <b>'+fora+'</b></span>';
 }
 
 async function salvarCQI(){
-  var a=AN[selAnalito];
-  var n1=parseFloat(gval('bio-n1')),n2=parseFloat(gval('bio-n2'));
+  var a=AN[selAnalito];var n1=parseFloat(val('bio-n1')),n2=parseFloat(val('bio-n2'));
   if(isNaN(n1)&&isNaN(n2)){fb('bio-fb','Informe ao menos um valor.','var(--rd)');return;}
   try{
     var regs=[];
-    if(!isNaN(n1))regs.push({data:gval('bio-data'),analito:a.nm,area:'Bioquímica',nivel:1,lote:gval('bio-lote'),valor_obtido:n1,alvo:a.n1.a,sd:a.n1.s,responsavel:usr.nome});
-    if(!isNaN(n2))regs.push({data:gval('bio-data'),analito:a.nm,area:'Bioquímica',nivel:2,lote:gval('bio-lote'),valor_obtido:n2,alvo:a.n2.a,sd:a.n2.s,responsavel:usr.nome});
+    if(!isNaN(n1))regs.push({data:val('bio-data'),analito:a.nm,area:'Bioquímica',nivel:1,lote:val('bio-lote'),valor_obtido:n1,alvo:a.n1.a,sd:a.n1.s,responsavel:usr.nome});
+    if(!isNaN(n2))regs.push({data:val('bio-data'),analito:a.nm,area:'Bioquímica',nivel:2,lote:val('bio-lote'),valor_obtido:n2,alvo:a.n2.a,sd:a.n2.s,responsavel:usr.nome});
     await Promise.all(regs.map(function(r){return db.p('cqi_resultados',r);}));
     fb('bio-fb','✓ '+a.nm+' salvo!');
-    log('lançou CQ','cq',a.nm+' N1='+n1+' N2='+n2,'Bioquímica '+gval('bio-data'));
-    ini('bio-n1','');ini('bio-n2','');
+    log('lançou CQI Bioquímica','cq-interno',a.nm,'Lote '+val('bio-lote'));
+    set('bio-n1','');set('bio-n2','');
   }catch(e){fb('bio-fb','Erro: '+e.message,'var(--rd)');}
 }
 
+// PRO-EX / CQ EXTERNO
+var PROEX_DATA=[
+  {data:'Dez/2021',lote:448,inaceitaveis:'CK · Fosfatase Alcalina · Glicose · TGP · Ureia',corretiva:'Manutenção corretiva e preventiva anual. Troca de lâmpada do espectrofotômetro.',preventiva:'Manutenção preventiva anual programada.',obs:'CQI interno dentro dos parâmetros aceitáveis.'},
+  {data:'Jan/2022',lote:449,inaceitaveis:'Hemácias · Hemoglobina',corretiva:'',preventiva:'',obs:''},
+  {data:'Fev/2022',lote:450,inaceitaveis:'Urinálise: Leucócitos',corretiva:'Revisão da técnica de contagem',preventiva:'Revisão da técnica de contagem',obs:'Diferença de apenas 01 leucócito'},
+  {data:'Mar/2022',lote:451,inaceitaveis:'Educação continuada',corretiva:'Revisão da questão',preventiva:'Reavaliação do conteúdo',obs:''},
+  {data:'Abr/2022',lote:452,inaceitaveis:'Ureia · Leucócitos virtual',corretiva:'',preventiva:'',obs:''},
+  {data:'Mai/2022',lote:453,inaceitaveis:'Creatinina · Glicose na urina',corretiva:'Revisão com controles',preventiva:'Realizar controle interno de lotes diferentes',obs:''},
+  {data:'Jun/2022',lote:454,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Jul/2022',lote:455,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Ago/2022',lote:456,inaceitaveis:'Reticulócitos virtual',corretiva:'Revisão da metodologia de contagem',preventiva:'Revisão da metodologia de contagem',obs:''},
+  {data:'Set/2022',lote:457,inaceitaveis:'Colesterol · Educação continuada',corretiva:'Reavaliado com controles / Revisão da questão',preventiva:'Reavaliado com controles / Reavaliação do conteúdo',obs:'CQI interno dentro dos parâmetros'},
+  {data:'Out/2022',lote:458,inaceitaveis:'HDL Colesterol',corretiva:'Revisão com controles',preventiva:'Rever controles',obs:'Parâmetro dentro do aceitável pelo CI PNCQ'},
+  {data:'Nov/2022',lote:459,inaceitaveis:'Educação continuada · Leucócitos (urina)',corretiva:'Revisão da questão / Reavaliação',preventiva:'Reavaliação do conteúdo / Método de leitura',obs:''},
+  {data:'Dez/2022',lote:460,inaceitaveis:'LDH · Fosfatase Alcalina',corretiva:'Reajuste com controle / Reavaliação',preventiva:'',obs:'CQI interno dentro dos parâmetros'},
+  {data:'Jan/2023',lote:461,inaceitaveis:'Urinálise virtual',corretiva:'Revisão',preventiva:'Revisão',obs:''},
+  {data:'Fev/2023',lote:462,inaceitaveis:'Colesterol · Glicose na urina',corretiva:'Reajuste com controles / Revisão',preventiva:'',obs:'CQI interno dentro dos parâmetros'},
+  {data:'Mar/2023',lote:463,inaceitaveis:'Leveduras na urina',corretiva:'Revisão de leitura',preventiva:'',obs:''},
+  {data:'Abr/2023',lote:464,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Mai/2023',lote:465,inaceitaveis:'Ureia',corretiva:'Reajuste com controle / Revisão',preventiva:'',obs:''},
+  {data:'Jun/2023',lote:466,inaceitaveis:'CPK · Urinálise virtual',corretiva:'Reajuste com controle / Revisão',preventiva:'',obs:'Erro de digitação'},
+  {data:'Jul/2023',lote:467,inaceitaveis:'Reticulócitos virtual',corretiva:'Revisão de leitura / Revisão prévia',preventiva:'',obs:''},
+  {data:'Ago/2023',lote:468,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Set/2023',lote:469,inaceitaveis:'Educação continuada',corretiva:'Revisão / Reavaliação método de leitura',preventiva:'',obs:''},
+  {data:'Out/2023',lote:470,inaceitaveis:'Educação continuada',corretiva:'Revisão de conteúdo',preventiva:'',obs:''},
+  {data:'Nov/2023',lote:471,inaceitaveis:'HDL Colesterol · Reticulócitos virtual · Urinálise virtual',corretiva:'Reajuste com controles / Revisão de leitura',preventiva:'',obs:'CQI interno ok'},
+  {data:'Dez/2023',lote:472,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Jan/2024',lote:473,inaceitaveis:'Amilase · Bilirrubina total · CPK · Ferro · Colesterol',corretiva:'Reajuste com controle em todos',preventiva:'',obs:'CQI interno ok'},
+  {data:'Fev/2024',lote:474,inaceitaveis:'Amilase · RDW',corretiva:'Reajuste com controle / Revisão com controle',preventiva:'',obs:'CQI interno ok'},
+  {data:'Mar/2024',lote:475,inaceitaveis:'Urinálise: leucócitos',corretiva:'Revisão técnica de contagem',preventiva:'',obs:'Diferença de 01 leucócito'},
+  {data:'Abr/2024',lote:476,inaceitaveis:'Urinálise virtual · Educação continuada',corretiva:'Revisão de conteúdo',preventiva:'',obs:''},
+  {data:'Mai/2024',lote:477,inaceitaveis:'Educação continuada · VDRL · Microbiologia II BAAR',corretiva:'Revisão de conteúdo / Revisão com controles / Revisão de lâminas',preventiva:'',obs:''},
+  {data:'Jun/2024',lote:478,inaceitaveis:'Urinálise virtual',corretiva:'Revisão de conteúdo',preventiva:'',obs:''},
+  {data:'Jul/2024',lote:479,inaceitaveis:'Fosfatase alcalina',corretiva:'Reajuste com controle / Revisão',preventiva:'',obs:''},
+  {data:'Ago/2024',lote:480,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Set/2024',lote:481,inaceitaveis:'Educação continuada',corretiva:'Revisão de conteúdo',preventiva:'',obs:''},
+  {data:'Out/2024',lote:482,inaceitaveis:'Colesterol · VDRL · Urinálise: bactérias',corretiva:'Reajuste / Revisão e troca de reagente / Revisão',preventiva:'',obs:''},
+  {data:'Nov/2024',lote:483,inaceitaveis:'TGO',corretiva:'Reajuste com controles',preventiva:'',obs:'CQI interno dentro dos parâmetros'},
+  {data:'Dez/2024',lote:484,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Jan/2025',lote:485,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Fev/2025',lote:486,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Mar/2025',lote:487,inaceitaveis:'RDW',corretiva:'Revisão',preventiva:'Verificação com leituras',obs:'CQI interno dentro dos parâmetros aceitáveis'},
+  {data:'Abr/2025',lote:488,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Mai/2025',lote:489,inaceitaveis:'Urinálise virtual · Urinálise: tr sangue e bilirrubinas',corretiva:'Revisão',preventiva:'Revisão',obs:'Erro de digitação'},
+  {data:'Jun/2025',lote:490,inaceitaveis:'Urinálise virtual',corretiva:'Revisão',preventiva:'Revisão',obs:''},
+  {data:'Jul/2025',lote:491,inaceitaveis:'Hematologia-Plaquetas · Urinálise',corretiva:'Reajuste com controles / Revisão',preventiva:'Acompanhamento com controles',obs:''},
+  {data:'Ago/2025',lote:492,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Set/2025',lote:493,inaceitaveis:'Creatinina · TGO · Urinálise · Urinálise virtual',corretiva:'Revisão e calibração / Revisão / Revisão técnica de contagem',preventiva:'Acompanhamento com controles',obs:'Erro de digitação'},
+  {data:'Out/2025',lote:494,inaceitaveis:'Colesterol',corretiva:'Reajuste com controles',preventiva:'Acompanhamento com controles',obs:''},
+  {data:'Nov/2025',lote:495,inaceitaveis:'Fosfatase alcalina',corretiva:'Reajuste com controles',preventiva:'Acompanhamento com controles',obs:''},
+  {data:'Dez/2025',lote:496,inaceitaveis:'Parasitologia',corretiva:'Revisão',preventiva:'Revisão',obs:''},
+  {data:'Jan/2026',lote:497,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''},
+  {data:'Fev/2026',lote:498,inaceitaveis:'Colesterol · Coombs direto',corretiva:'Reajuste com controles',preventiva:'',obs:'CQI interno dentro dos parâmetros aceitáveis'},
+  {data:'Mar/2026',lote:499,inaceitaveis:'TGO · Educação continuada · Urinálise',corretiva:'Reajuste com controles / Revisão de conteúdo / Revisão',preventiva:'',obs:'Erro de digitação na urinálise'},
+  {data:'Abr/2026',lote:500,inaceitaveis:'100% ACERTO',corretiva:'',preventiva:'',obs:''}
+];
+
+var proexFiltro='todos';
+function carregarProEX(){
+  var cont=el('proex-lista');if(!cont)return;
+  var filtrado=proexFiltro==='todos'?PROEX_DATA:proexFiltro==='acerto'?PROEX_DATA.filter(function(p){return p.inaceitaveis==='100% ACERTO';}):PROEX_DATA.filter(function(p){return p.inaceitaveis!=='100% ACERTO';});
+  // Reverter para mostrar mais recente primeiro
+  var rev=filtrado.slice().reverse();
+  cont.innerHTML=rev.map(function(p){
+    var ok=p.inaceitaveis==='100% ACERTO';
+    var bk=ok?'<span class="bk bk-ok">✓ 100% Acerto</span>':'<span class="bk bk-dg">Com inaceitáveis</span>';
+    return '<div class="px-item" style="border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:8px;border-left:3px solid '+(ok?'var(--gn)':'var(--rd)')+'">'
+      +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:'+(ok?'0':'10px')+'">'
+      +'<div style="background:var(--s2);border-radius:6px;padding:6px 10px;text-align:center;min-width:60px"><div style="font-size:11px;color:var(--tx3)">Lote</div><div style="font-size:16px;font-weight:600;font-family:DM Mono">'+p.lote+'</div></div>'
+      +'<div style="flex:1"><div style="font-size:13px;font-weight:500">'+p.data+'</div><div style="font-size:12px;color:var(--tx2);margin-top:2px">'+p.inaceitaveis+'</div></div>'
+      +bk+'</div>'
+      +(!ok?'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">'
+        +'<div><div style="font-size:10px;font-weight:600;text-transform:uppercase;color:var(--tx3);margin-bottom:3px">Medida corretiva</div><div style="font-size:12px;color:var(--tx2)">'+(p.corretiva||'—')+'</div></div>'
+        +'<div><div style="font-size:10px;font-weight:600;text-transform:uppercase;color:var(--tx3);margin-bottom:3px">Medida preventiva</div><div style="font-size:12px;color:var(--tx2)">'+(p.preventiva||'—')+'</div></div>'
+        +(p.obs?'<div style="grid-column:1/-1"><div style="font-size:10px;font-weight:600;text-transform:uppercase;color:var(--tx3);margin-bottom:3px">Observação</div><div style="font-size:12px;color:var(--tx2)">'+p.obs+'</div></div>':'')
+        +'</div>':'')
+      +'</div>';
+  }).join('');
+  // KPIs PRO-EX
+  var total=PROEX_DATA.length;
+  var acerto=PROEX_DATA.filter(function(p){return p.inaceitaveis==='100% ACERTO';}).length;
+  var e=el('px-kpi-total');if(e)e.textContent=total;
+  e=el('px-kpi-acerto');if(e)e.textContent=acerto;
+  e=el('px-kpi-inac');if(e)e.textContent=total-acerto;
+}
+
+function filtroProEX(f,el2){
+  el2.closest('.tb').querySelectorAll('.tt').forEach(function(t){t.classList.remove('active');});
+  el2.classList.add('active');
+  proexFiltro=f;
+  carregarProEX();
+}
+
+// UPLOAD PRO-EX COM EXTRAÇÃO
+var proexUpFile=null;
+function handleProEXFile(inp){
+  if(inp.files[0]){proexUpFile=inp.files[0];el('px-fname').textContent='✓ '+proexUpFile.name;}
+}
+
+async function salvarNovoCiclo(){
+  var lote=parseInt(val('px-novo-lote'));
+  var data=val('px-novo-data');
+  var inac=val('px-novo-inac');
+  var corr=val('px-novo-corr');
+  var prev=val('px-novo-prev');
+  var obs=val('px-novo-obs');
+  if(!lote){fb('px-novo-fb','Informe o número do lote.','var(--rd)');return;}
+  fb('px-novo-fb','Salvando...','var(--tx2)');
+  try{
+    // Upload do PDF se houver
+    var url=null;
+    if(proexUpFile){
+      var nome='proex-'+lote+'-'+Date.now()+'.'+proexUpFile.name.split('.').pop();
+      var ur=await fetch(U+'/storage/v1/object/labgest-arquivos/'+nome,{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':proexUpFile.type,'x-upsert':'true'},body:proexUpFile});
+      if(ur.ok)url=U+'/storage/v1/object/public/labgest-arquivos/'+nome;
+    }
+    await db.p('proex_ciclos',{lote:lote,data_resultado:data,analitos_inaceitaveis:inac,medida_corretiva:corr,medida_preventiva:prev,observacoes:obs,tem_inaceitavel:!!inac&&inac!=='100% ACERTO',arquivo_url:url});
+    log('lançou PRO-EX','cq-externo','Lote '+lote,'PRO-EX Lote '+lote);
+    fb('px-novo-fb','✓ Ciclo Lote '+lote+' salvo!');
+    set('px-novo-inac','');set('px-novo-corr','');set('px-novo-prev','');set('px-novo-obs','');
+    proexUpFile=null;el('px-fname').textContent='';el('px-pdf').value='';
+    // Adicionar ao array local
+    PROEX_DATA.push({data:data,lote:lote,inaceitaveis:inac||'100% ACERTO',corretiva:corr,preventiva:prev,obs:obs});
+    carregarProEX();
+  }catch(e){fb('px-novo-fb','Erro: '+e.message,'var(--rd)');}
+}
+
 // TEMPERATURAS
+var tempData={
+  banho:[{dia:4,hora:'07:40',temp:'36,9°C',resp:'Liege'},{dia:5,hora:'07:20',temp:'36,9°C',resp:'Liege'},{dia:6,hora:'11:15',temp:'36,8°C',resp:'Dulce'},{dia:7,hora:'08:00',temp:'37,0°C',resp:'Liege'},{dia:8,hora:'07:50',temp:'36,9°C',resp:'Liege'},{dia:9,hora:'07:40',temp:'36,9°C',resp:'Liege'},{dia:11,hora:'08:15',temp:'36,8°C',resp:'Liege'},{dia:12,hora:'08:35',temp:'36,9°C',resp:'Liege'},{dia:13,hora:'09:35',temp:'36,8°C',resp:'Liege'},{dia:14,hora:'08:45',temp:'36,9°C',resp:'Liege'}]
+};
+
 async function salvarTemp(){
   try{
-    await db.p('temperaturas',{data:gval('temp-data'),equipamento:gval('temp-equip'),temperatura:gval('temp-val'),horario:gval('temp-hora')||null,responsavel:usr.nome,observacao:gval('temp-obs'),dentro_limite:true});
-    log('registrou temperatura','temperaturas',gval('temp-val'),gval('temp-equip'));
-    fb('temp-fb','✓ Temperatura registrada!');
-    ini('temp-val','');ini('temp-obs','');
+    await db.p('temperaturas',{data:val('temp-data'),equipamento:val('temp-equip'),temperatura:val('temp-val'),turno:val('temp-turno'),horario:val('temp-hora')||null,responsavel:usr.nome,observacao:val('temp-obs'),dentro_limite:true});
+    log('registrou temperatura','temperaturas',val('temp-val'),val('temp-equip'));
+    fb('temp-fb','✓ Registrado!');
+    set('temp-val','');set('temp-obs','');
     carregarTemps();
   }catch(e){fb('temp-fb','Erro: '+e.message,'var(--rd)');}
 }
+
 async function carregarTemps(){
-  var c=gel('temp-lista');
-  if(!c)return;
+  var cont=el('temp-lista');if(!cont)return;
   try{
-    var r=await db.g('temperaturas','select=*&order=criado_em.desc&limit=25');
-    if(!r.length){c.innerHTML='<div style="color:var(--tx3);font-size:13px">Nenhum registro ainda.</div>';return;}
-    c.innerHTML='<div class="th" style="grid-template-columns:1fr 2fr 1fr 1fr 1.5fr;gap:8px"><span>Data</span><span>Equipamento</span><span>Temp.</span><span>Horário</span><span>Responsável</span></div>'
-      +r.map(function(x){return '<div class="tr" style="grid-template-columns:1fr 2fr 1fr 1fr 1.5fr"><span class="rm">'+fmt(x.data)+'</span><span>'+x.equipamento+'</span><span><b>'+x.temperatura+'</b></span><span class="rm">'+(x.horario||'—')+'</span><span style="font-size:12px">'+(x.responsavel||'').split(' ')[0]+'</span></div>';}).join('');
-  }catch(e){c.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro.</div>';}
+    var r=await db.g('temperaturas','select=*&order=criado_em.desc&limit=30');
+    if(!r.length){
+      // Mostrar dados reais do arquivo do Drive
+      cont.innerHTML='<div style="font-size:12px;color:var(--tx3);margin-bottom:10px">Registros do drive — Banho Maria Mai/2026</div>'
+        +'<div class="th" style="grid-template-columns:.5fr 1fr 1fr 1fr 1.5fr;gap:8px"><span>Dia</span><span>Horário</span><span>Temp.</span><span>Turno</span><span>Responsável</span></div>'
+        +tempData.banho.map(function(x){return '<div class="tr" style="grid-template-columns:.5fr 1fr 1fr 1fr 1.5fr"><span>'+x.dia+'/05</span><span class="rm">'+x.hora+'</span><span><b>'+x.temp+'</b></span><span class="bk bk-ok" style="font-size:10px">Manhã</span><span style="font-size:12px">'+x.resp+'</span></div>';}).join('');
+      return;
+    }
+    cont.innerHTML='<div class="th" style="grid-template-columns:1fr 2fr 1fr 1fr 1.5fr;gap:8px"><span>Data</span><span>Equipamento</span><span>Temp.</span><span>Turno</span><span>Responsável</span></div>'
+      +r.map(function(x){return '<div class="tr" style="grid-template-columns:1fr 2fr 1fr 1fr 1.5fr"><span class="rm">'+fmt(x.data)+'</span><span>'+x.equipamento+'</span><span><b>'+x.temperatura+'</b></span><span class="rm">'+(x.turno||'—')+'</span><span style="font-size:12px">'+(x.responsavel||'').split(' ')[0]+'</span></div>';}).join('');
+  }catch(e){cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro.</div>';}
 }
 
 // LIMPEZAS
+var limpData=[
+  {data:'03/02/2022',hora:'14:00',equip:'Geladeira insumos',resp:'Dulce'},
+  {data:'04/03/2022',hora:'14:00',equip:'Geladeira insumos',resp:'Dulce'},
+  {data:'05/01/2023',hora:'08:30',equip:'Geladeira insumos',resp:'Liege'},
+  {data:'12/06/2023',hora:'13:40',equip:'Geladeira insumos',resp:'Eliane'},
+  {data:'04/07/2023',hora:'10:15',equip:'Geladeira insumos',resp:'Eliane'},
+  {data:'09/08/2023',hora:'14:00',equip:'Geladeira insumos',resp:'Eliane'},
+  {data:'15/09/2023',hora:'14:30',equip:'Geladeira insumos',resp:'Eliane'}
+];
+
 async function salvarLimp(){
   try{
-    await db.p('limpezas',{data:gval('limp-data'),equipamento:gval('limp-equip'),horario:gval('limp-hora')||null,responsavel:usr.nome,produto_utilizado:gval('limp-prod'),observacao:gval('limp-obs')});
-    log('registrou limpeza','limpezas',gval('limp-prod'),gval('limp-equip'));
-    fb('limp-fb','✓ Limpeza registrada!');
-    ini('limp-obs','');ini('limp-prod','');
+    await db.p('limpezas',{data:val('limp-data'),equipamento:val('limp-equip'),turno:val('limp-turno'),horario:val('limp-hora')||null,responsavel:usr.nome,produto_utilizado:val('limp-prod'),observacao:val('limp-obs')});
+    log('registrou limpeza','limpezas',val('limp-prod'),val('limp-equip'));
+    fb('limp-fb','✓ Registrado!');
+    set('limp-obs','');set('limp-prod','');
     carregarLimpezas();
   }catch(e){fb('limp-fb','Erro: '+e.message,'var(--rd)');}
 }
+
 async function carregarLimpezas(){
-  var c=gel('limp-lista');
-  if(!c)return;
+  var cont=el('limp-lista');if(!cont)return;
   try{
-    var r=await db.g('limpezas','select=*&order=criado_em.desc&limit=25');
-    if(!r.length){c.innerHTML='<div style="color:var(--tx3);font-size:13px">Nenhum registro ainda.</div>';return;}
-    c.innerHTML='<div class="th" style="grid-template-columns:1fr 2fr 1fr 1.5fr;gap:8px"><span>Data</span><span>Equipamento</span><span>Horário</span><span>Responsável</span></div>'
-      +r.map(function(x){return '<div class="tr" style="grid-template-columns:1fr 2fr 1fr 1.5fr"><span class="rm">'+fmt(x.data)+'</span><span>'+x.equipamento+'</span><span class="rm">'+(x.horario||'—')+'</span><span style="font-size:12px">'+(x.responsavel||'').split(' ')[0]+'</span></div>';}).join('');
-  }catch(e){c.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro.</div>';}
+    var r=await db.g('limpezas','select=*&order=criado_em.desc&limit=30');
+    if(!r.length){
+      cont.innerHTML='<div style="font-size:12px;color:var(--tx3);margin-bottom:10px">Registros históricos do drive</div>'
+        +'<div class="th" style="grid-template-columns:1fr 2fr 1fr 1.5fr;gap:8px"><span>Data</span><span>Equipamento</span><span>Horário</span><span>Responsável</span></div>'
+        +limpData.map(function(x){return '<div class="tr" style="grid-template-columns:1fr 2fr 1fr 1.5fr"><span class="rm">'+x.data+'</span><span>'+x.equip+'</span><span class="rm">'+x.hora+'</span><span style="font-size:12px">'+x.resp+'</span></div>';}).join('');
+      return;
+    }
+    cont.innerHTML='<div class="th" style="grid-template-columns:1fr 2fr 1fr 1fr 1.5fr;gap:8px"><span>Data</span><span>Equipamento</span><span>Turno</span><span>Horário</span><span>Responsável</span></div>'
+      +r.map(function(x){return '<div class="tr" style="grid-template-columns:1fr 2fr 1fr 1fr 1.5fr"><span class="rm">'+fmt(x.data)+'</span><span>'+x.equipamento+'</span><span class="rm">'+(x.turno||'—')+'</span><span class="rm">'+(x.horario||'—')+'</span><span style="font-size:12px">'+(x.responsavel||'').split(' ')[0]+'</span></div>';}).join('');
+  }catch(e){cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro.</div>';}
+}
+
+// TREINAMENTOS
+var TREINAMENTOS=[
+  {titulo:'Treinamento VDRL',data:'27/04/2026',tipo:'Interno',arquivo:null},
+  {titulo:'Treinamento Tipagem Sanguínea',data:'12/05/2026',tipo:'Interno',arquivo:null},
+  {titulo:'Treinamento Higiene',data:'Mai/2026',tipo:'Interno',arquivo:null}
+];
+
+function carregarTreinamentos(){
+  var cont=el('trei-lista');if(!cont)return;
+  cont.innerHTML=TREINAMENTOS.map(function(t){
+    return '<div class="di" onclick="abrirTreinamento(\''+t.titulo+'\')">'
+      +'<div class="dico tre">TRE</div>'
+      +'<div style="flex:1;min-width:0"><div class="dit">'+t.titulo+'</div>'
+      +'<div class="dim">'+t.tipo+' · '+t.data+' · Leitura obrigatória</div></div>'
+      +'<span class="bk bk-bl">Obrigatório</span><span class="bx">Abrir e confirmar</span>'
+      +'</div>';
+  }).join('');
+}
+
+function abrirTreinamento(titulo){
+  el('m-titulo').textContent=titulo;
+  el('m-meta').textContent='Treinamento interno · Leitura obrigatória';
+  el('docModal').classList.add('open');
+  el('m-btn-salvar').style.display='none';
+  el('m-btn-leitura').style.display='inline-flex';
+  el('m-btn-leitura').textContent='✓ Confirmar participação';
+  el('m-btn-leitura').style.background='';
+  el('m-feedback').textContent='';
+  el('m-body').innerHTML='<div style="background:var(--am-bg);border:1px solid #fac775;border-radius:8px;padding:14px;margin-bottom:16px;font-size:13px"><b>⚠ Treinamento obrigatório</b> — Após ler ou participar do treinamento, clique em "Confirmar participação" para registrar.</div>'
+    +'<div style="background:var(--s2);border-radius:8px;padding:16px;font-size:13px;color:var(--tx2)">O arquivo deste treinamento pode ser visualizado no Google Drive ou uploado aqui pelo módulo Upload de laudos.</div>';
+  // Registrar log
+  log('acessou treinamento','treinamentos',titulo,titulo);
+}
+
+// CERTIFICADOS
+var CERTIFICADOS=[
+  {nome:'Luiza Manfroi de Mattos',cert:'CBAC 2025',data:'Ago/2025',arquivo:'CBAC 2025-LUIZA.pdf'},
+  {nome:'Luiza Manfroi de Mattos',cert:'CBAC 2024',data:'Out/2024',arquivo:'LUIZA CBAC 2024.pdf'},
+  {nome:'Luiza Manfroi de Mattos',cert:'Gestão de risco',data:'Jan/2025',arquivo:'gestão de risco-Luiza.pdf'},
+  {nome:'Luiza Manfroi de Mattos',cert:'PNCQ Gestor 2024',data:'Out/2024',arquivo:'Luiza-pncq gestor 2024.pdf'},
+  {nome:'Dulcemeri Pessetti Dario',cert:'CHROMATOX',data:'Set/2025',arquivo:'DULCE-CHROMATOX1.pdf'},
+  {nome:'Dulcemeri Pessetti Dario',cert:'Acondicionamento de amostras',data:'Ago/2025',arquivo:'Dulce-ACONCIDIONAMENTO DE AMOSTRAS-08.25.pdf'},
+  {nome:'Dulcemeri Pessetti Dario',cert:'Biossegurança',data:'Ago/2025',arquivo:'Dulce-Biosseguranç a-08.25.pdf'},
+  {nome:'Dulcemeri Pessetti Dario',cert:'Coleta humanizada',data:'Ago/2025',arquivo:'Dulce-Coleta humanizada 08.25.pdf'},
+  {nome:'Dulcemeri Pessetti Dario',cert:'Diferença soro e plasma',data:'Abr/2025',arquivo:'Dulce-Diferença entre soro e plasma-04.25.pdf'},
+  {nome:'Dulcemeri Pessetti Dario',cert:'Visitação médica',data:'Mai/2025',arquivo:'Dulce-Visitação médica-05.25.pdf'},
+  {nome:'Ana Caroline Braz Nascimento',cert:'Acondicionamento de amostras',data:'Abr/2025',arquivo:'ANA-ACONDICIONAMENTO DE AMOSTRAS 04.25.pdf'},
+  {nome:'Ana Caroline Braz Nascimento',cert:'CHROMATOX 2025',data:'Set/2025',arquivo:'ANA-CHROMATOX 2025.pdf'},
+  {nome:'Luciane',cert:'CHROMATOX (5 certificados)',data:'Set/2025',arquivo:'LUCIANE-CHROMATOX.pdf'},
+  {nome:'Luciane',cert:'Coleta humanizada',data:'Ago/2025',arquivo:'Luciane-COLETA HUMANIZADA 08.25.pdf'},
+  {nome:'Luciane',cert:'Fluxo de atendimento',data:'Out/2024',arquivo:'Luciane-fluxo de atendimento.pdf'},
+  {nome:'Luciane',cert:'Importância do cliente',data:'Out/2024',arquivo:'Luciane-importancia do cliente.pdf'},
+  {nome:'Luciane',cert:'Preparo do paciente',data:'Out/2024',arquivo:'Luciane-preparo paciente.pdf'},
+  {nome:'Luciane',cert:'Recoletas',data:'Out/2024',arquivo:'Luciane-recoletas.pdf'},
+  {nome:'Grazi',cert:'Biossegurança',data:'Set/2025',arquivo:'grazi biossegurança 09.25.pdf'},
+  {nome:'Grazi',cert:'Coleta de amostras',data:'Set/2025',arquivo:'grazi amostras 09.25.pdf'},
+  {nome:'Grazi',cert:'Toxicológico',data:'Out/2025',arquivo:'grazi toxicológico.pdf'},
+  {nome:'Grazi',cert:'Coleta',data:'Out/2025',arquivo:'grazi coleta 10.25.pdf'}
+];
+
+function carregarCertificados(){
+  var cont=el('cert-lista');if(!cont)return;
+  var filtro=val('cert-filtro')||'';
+  var dados=filtro?CERTIFICADOS.filter(function(c){return c.nome.toLowerCase().includes(filtro.toLowerCase());}):CERTIFICADOS;
+  // Agrupar por pessoa
+  var grupos={};
+  dados.forEach(function(c){if(!grupos[c.nome])grupos[c.nome]=[];grupos[c.nome].push(c);});
+  var html='';
+  Object.keys(grupos).sort().forEach(function(nm){
+    html+='<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin:14px 0 6px">'+nm+' ('+grupos[nm].length+' certificados)</div>';
+    grupos[nm].forEach(function(c){
+      html+='<div class="rw"><div class="dico pdf" style="width:28px;height:28px;font-size:10px;flex-shrink:0">PDF</div>'
+        +'<span class="rn">'+c.cert+'</span>'
+        +'<span class="rm">'+c.data+'</span>'
+        +(c.arquivo_url?'<a href="'+c.arquivo_url+'" target="_blank"><button class="bx">Ver</button></a>':'<button class="bx" onclick="alert(\'Faça upload deste arquivo no módulo Upload de laudos para visualizar aqui.\')">Ver</button>')
+        +'</div>';
+    });
+  });
+  cont.innerHTML=html||'<div style="color:var(--tx3);font-size:13px">Nenhum certificado encontrado.</div>';
+}
+
+// VENCIMENTOS
+async function carregarVencimentos(){
+  var cont=el('venc-lista');if(!cont)return;
+  try{
+    var laudos=await db.g('laudos_vencimento','select=*&order=data_vencimento.asc');
+    if(!laudos.length){cont.innerHTML='<div class="cd"><div style="color:var(--tx3);font-size:13px">Nenhum laudo cadastrado ainda. Use o módulo Upload para adicionar.</div></div>';return;}
+    // Agrupar por categoria
+    var grupos={};
+    laudos.forEach(function(l){var t=l.tipo||'Outros';if(!grupos[t])grupos[t]=[];grupos[t].push(l);});
+    var html='';
+    Object.keys(grupos).sort().forEach(function(tipo){
+      html+='<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--tx3);margin:14px 0 6px">'+tipo+'</div>';
+      grupos[tipo].forEach(function(l){
+        var d=dias(l.data_vencimento);
+        var cls=d===null?'ok':d<0?'vd2':d<=30?'dg':d<=60?'wn':'ok';
+        var txt=d===null?'—':d<0?Math.abs(d)+'d':d===0?'Hoje':d+'d';
+        var cor=d===null?'var(--gn)':d<0?'#5a1a8a':d<=30?'var(--rd)':d<=60?'var(--am)':'var(--gn)';
+        html+='<div class="vc" style="border-left:3px solid '+cor+'">'
+          +'<div class="vd '+cls+'"><div class="vn">'+txt+'</div><div class="vl">'+(d===null?'ok':d<0?'vencido':d===0?'hoje':'dias')+'</div></div>'
+          +'<div class="vi"><div class="vt">'+l.descricao+'</div>'
+          +'<div class="vm">Vencimento: '+fmt(l.data_vencimento)+(l.arquivo_nome?' · '+l.arquivo_nome:'')+'</div></div>'
+          +(l.arquivo_url?'<a href="'+l.arquivo_url+'" target="_blank"><button class="bx">Ver</button></a>':'')
+          +'</div>';
+      });
+    });
+    cont.innerHTML=html;
+  }catch(e){cont.innerHTML='<div class="cd"><div style="color:var(--tx3);font-size:13px">Erro: '+e.message+'</div></div>';}
 }
 
 // UPLOAD
-function dropZone(e){e.preventDefault();gel('up-zone').classList.add('drag');}
-function dropLeave(){gel('up-zone').classList.remove('drag');}
-function handleDrop(e){e.preventDefault();gel('up-zone').classList.remove('drag');var f=e.dataTransfer.files[0];if(f)setFile(f);}
-function handleFile(inp){if(inp.files[0])setFile(inp.files[0]);}
-function setFile(f){upFile=f;gel('up-fname').textContent='✓ '+f.name+' ('+Math.round(f.size/1024)+'KB)';}
+function setUpFile(inp){if(inp.files[0]){upFile=inp.files[0];el('up-fname').textContent='✓ '+upFile.name+' ('+Math.round(upFile.size/1024)+'KB)';}}
+function handleDrop(e){e.preventDefault();el('up-zone').classList.remove('drag');var f=e.dataTransfer.files[0];if(f){upFile=f;el('up-fname').textContent='✓ '+f.name;}}
 
 async function fazerUpload(){
-  if(!gval('up-desc')){fb('up-fb','Informe a descrição.','var(--rd)');return;}
+  if(!val('up-desc')){fb('up-fb','Informe a descrição.','var(--rd)');return;}
   if(!upFile){fb('up-fb','Selecione um arquivo.','var(--rd)');return;}
   fb('up-fb','Enviando...','var(--tx2)');
   try{
-    var nome=Date.now()+'-'+upFile.name.replace(/\s+/g,'-');
+    var nome=Date.now()+'-'+upFile.name.replace(/\s+/g,'-').replace(/[^\w.-]/g,'_');
     var ur=await fetch(U+'/storage/v1/object/labgest-arquivos/'+nome,{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':upFile.type,'x-upsert':'true'},body:upFile});
     var url=ur.ok?U+'/storage/v1/object/public/labgest-arquivos/'+nome:null;
-    var venc=gval('up-venc');
+    var venc=val('up-venc');
     var d=venc?dias(venc):null;
     var status=d===null?'vigente':d<0?'vencido':d<=60?'vencendo':'vigente';
-    await db.p('laudos_vencimento',{tipo:gval('up-tipo'),descricao:gval('up-desc'),data_emissao:gval('up-emissao')||null,data_vencimento:venc||null,arquivo_url:url,arquivo_nome:upFile.name,responsavel:usr.nome,status:status});
-    log('fez upload','upload',gval('up-tipo'),gval('up-desc'));
+    await db.p('laudos_vencimento',{tipo:val('up-tipo'),descricao:val('up-desc'),data_emissao:val('up-emissao')||null,data_vencimento:venc||null,arquivo_url:url,arquivo_nome:upFile.name,responsavel:usr.nome,status:status});
+    log('fez upload','upload',val('up-tipo'),val('up-desc'));
     fb('up-fb','✓ Enviado com sucesso!');
-    upFile=null;gel('up-fname').textContent='';ini('up-desc','');ini('up-emissao','');ini('up-venc','');
-    gel('upFile').value='';
+    upFile=null;el('up-fname').textContent='';set('up-desc','');set('up-emissao','');set('up-venc','');el('upFile').value='';
     carregarUploads();
   }catch(e){fb('up-fb','Erro: '+e.message,'var(--rd)');}
 }
+
 async function carregarUploads(){
-  var c=gel('up-lista');
-  if(!c)return;
+  var cont=el('up-lista');if(!cont)return;
   try{
-    var r=await db.g('laudos_vencimento','select=*&order=criado_em.desc&limit=15');
-    if(!r.length){c.innerHTML='<div style="color:var(--tx3);font-size:13px">Nenhum enviado ainda.</div>';return;}
-    c.innerHTML=r.map(function(l){
+    var r=await db.g('laudos_vencimento','select=*&order=criado_em.desc&limit=20');
+    if(!r.length){cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Nenhum enviado ainda.</div>';return;}
+    cont.innerHTML=r.map(function(l){
       var d=dias(l.data_vencimento);
       var cls=d===null?'gy':d<0?'dg':d<=60?'wn':'ok';
       return '<div class="di">'
@@ -1087,104 +1327,73 @@ async function carregarUploads(){
         +(l.arquivo_url?'<a href="'+l.arquivo_url+'" target="_blank"><button class="bx">Ver</button></a>':'')
         +'</div>';
     }).join('');
-  }catch(e){c.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro.</div>';}
+  }catch(e){cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro.</div>';}
 }
 
 // LOG
 async function carregarLog(){
-  var c=gel('log-lista');
-  if(!c)return;
-  c.innerHTML='<div style="color:var(--tx3);font-size:13px">Carregando...</div>';
+  var cont=el('log-lista');if(!cont)return;
+  cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Carregando...</div>';
   try{
-    var p='select=*&order=criado_em.desc&limit=60';
-    var u=gval('log-user'),m=gval('log-mod');
+    var p='select=*&order=criado_em.desc&limit=80';
+    var u=val('log-user'),m=val('log-mod');
     if(u)p+='&usuario_nome=eq.'+encodeURIComponent(u);
     if(m)p+='&modulo=eq.'+encodeURIComponent(m);
     var r=await db.g('log_atividades',p);
-    if(!r.length){c.innerHTML='<div style="color:var(--tx3);font-size:13px">Nenhuma atividade.</div>';return;}
-    c.innerHTML=r.map(function(l){
+    if(!r.length){cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Nenhuma atividade.</div>';return;}
+    cont.innerHTML=r.map(function(l){
       return '<div class="li2"><div class="lav">'+avt(l.usuario_nome)+'</div>'
         +'<div class="lt2"><b>'+(l.usuario_nome||'').split(' ').slice(0,2).join(' ')+'</b> '+l.acao+(l.item_nome?' — <i>'+l.item_nome+'</i>':'')+(l.detalhes?' · '+l.detalhes:'')+'</div>'
         +'<div class="ltm">'+fmtdt(l.criado_em)+'</div></div>';
     }).join('');
-  }catch(e){c.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro.</div>';}
+  }catch(e){cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro.</div>';}
 }
 
-// USUÁRIOS (admin)
+// USUÁRIOS
 async function carregarUsuarios(){
-  var c=gel('usr-lista');
-  if(!c)return;
-  c.innerHTML='<div style="color:var(--tx3);font-size:13px">Carregando...</div>';
+  var cont=el('usr-lista');if(!cont)return;
+  cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Carregando...</div>';
   try{
     var users=await db.g('usuarios','select=*&order=nome.asc');
-    c.innerHTML='<div class="th" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr;gap:8px"><span>Nome</span><span>Cargo</span><span>Último acesso</span><span>Status</span><span>Ações</span></div>';
+    cont.innerHTML='<div class="th" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr;gap:8px"><span>Nome</span><span>Cargo</span><span>Último acesso</span><span>Status</span><span>Ações</span></div>';
     users.forEach(function(u){
-      var row=document.createElement('div');
-      row.className='tr';row.style.gridTemplateColumns='2fr 1.5fr 1fr 1fr 1fr';
-      var adm=u.admin?'<span class="bk bk-bl" style="margin-left:4px">Admin</span>':'';
+      var row=document.createElement('div');row.className='tr';row.style.gridTemplateColumns='2fr 1.5fr 1fr 1fr 1fr';
+      var adm=u.admin?'<span class="bk bk-bl" style="margin-left:4px;font-size:10px">Admin</span>':'';
       var st=u.ativo?'<span class="bk bk-ok">Ativo</span>':'<span class="bk bk-gy">Inativo</span>';
       row.innerHTML='<span><b>'+u.nome.split(' ').slice(0,2).join(' ')+'</b>'+adm+'</span>'
         +'<span style="font-size:12px">'+(u.cargo||'—')+'</span>'
-        +'<span class="rm">'+fmt(u.ultimo_acesso)+'</span>'+st
-        +'<div style="display:flex;gap:4px"></div>';
+        +'<span class="rm">'+fmt(u.ultimo_acesso)+'</span>'+st+'<div style="display:flex;gap:4px"></div>';
       var ac=row.querySelector('div');
-      // Botão ativar/desativar
-      var b1=document.createElement('button');
-      b1.className='bx';b1.textContent=u.ativo?'Desativar':'Reativar';
-      b1.style.color=u.ativo?'var(--rd)':'var(--gn)';
-      b1.addEventListener('click',(function(uid,nome,ativo){return function(){
-        if(!confirm((ativo?'Desativar':'Reativar')+' '+nome+'?'))return;
-        db.u('usuarios','id=eq.'+uid,{ativo:!ativo}).then(function(){log((ativo?'desativou':'reativou')+' usuário','usuarios','',nome);carregarUsuarios();});
-      };})(u.id,u.nome.split(' ')[0],u.ativo));
-      // Botão senha
-      var b2=document.createElement('button');
-      b2.className='bx';b2.textContent='Senha';
-      b2.addEventListener('click',(function(uid,nome){return function(){
-        var ns=prompt('Nova senha para '+nome+':');
-        if(!ns)return;
-        db.u('usuarios','id=eq.'+uid,{senha_hash:ns}).then(function(){
-          log('redefiniu senha','usuarios','',nome);
-          fb('usr-fb','✓ Senha de '+nome+' atualizada!');
-        });
-      };})(u.id,u.nome.split(' ')[0]));
-      ac.appendChild(b1);ac.appendChild(b2);
-      c.appendChild(row);
+      var b1=document.createElement('button');b1.className='bx';b1.textContent=u.ativo?'Desativar':'Reativar';b1.style.color=u.ativo?'var(--rd)':'var(--gn)';
+      b1.addEventListener('click',(function(uid,nm,at){return function(){if(!confirm((at?'Desativar':'Reativar')+' '+nm+'?'))return;db.u('usuarios','id=eq.'+uid,{ativo:!at}).then(function(){log((at?'desativou':'reativou')+' usuário','usuarios','',nm);carregarUsuarios();});};  })(u.id,u.nome.split(' ')[0],u.ativo));
+      var b2=document.createElement('button');b2.className='bx';b2.textContent='Senha';
+      b2.addEventListener('click',(function(uid,nm){return function(){var ns=prompt('Nova senha para '+nm+':');if(!ns)return;db.u('usuarios','id=eq.'+uid,{senha_hash:ns}).then(function(){log('redefiniu senha','usuarios','',nm);fb('usr-fb','✓ Senha de '+nm+' atualizada!');});};  })(u.id,u.nome.split(' ')[0]));
+      ac.appendChild(b1);ac.appendChild(b2);cont.appendChild(row);
     });
-  }catch(e){c.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro: '+e.message+'</div>';}
+  }catch(e){cont.innerHTML='<div style="color:var(--tx3);font-size:13px">Erro: '+e.message+'</div>';}
 }
 
 async function criarUsuario(){
-  var nm=gval('new-nome').trim(),em=gval('new-email').trim(),cg=gval('new-cargo'),sn=gval('new-senha').trim();
-  var adm=gel('new-admin')?.checked||false;
+  var nm=val('new-nome').trim(),em=val('new-email').trim(),cg=val('new-cargo'),sn=val('new-senha').trim();
+  var adm=el('new-admin')?.checked||false;
   if(!nm||!em||!sn){fb('usr-fb','Preencha nome, email e senha.','var(--rd)');return;}
   try{
     await db.p('usuarios',{nome:nm,email:em,cargo:cg,senha_hash:sn,ativo:true,admin:adm});
     log('criou usuário','usuarios','',nm);
     fb('usr-fb','✓ '+nm.split(' ')[0]+' criado!');
-    ini('new-nome','');ini('new-email','');ini('new-senha','');
+    set('new-nome','');set('new-email','');set('new-senha','');
     carregarUsuarios();
   }catch(e){fb('usr-fb','Erro: '+e.message,'var(--rd)');}
 }
 
-// PRO-EX
-function renderProEXCharts(){
-  if(chartAn)chartAn.destroy();
-  if(chartTd)chartTd.destroy();
-  var c1=gel('px-analitos');
-  if(c1)chartAn=new Chart(c1.getContext('2d'),{type:'bar',data:{labels:['Ed.cont.','Urin.virt.','Colesterol','Fosfatase','Urin.leuc.','TGO','Reticulóc.'],datasets:[{data:[9,7,6,4,4,3,3],backgroundColor:['#E24B4A','#EF9F27','#EF9F27','#378ADD','#378ADD','#B5D4F4','#B5D4F4'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(0,0,0,0.04)'}},x:{grid:{display:false}}}}});
-  var c2=gel('px-tendencia');
-  if(c2)chartTd=new Chart(c2.getContext('2d'),{type:'line',data:{labels:['2021','2022','2023','2024','2025','2026'],datasets:[{data:[100,83,83,100,75,50],borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.08)',pointRadius:5,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{callback:function(v){return v+'%';}}},x:{grid:{display:false}}}}});
-}
-
+// PRO-EX LANÇAR
 var pxCount=0;
 function buildAnalitoLancar(){
-  var c=gel('px-analitos-form');
-  if(!c||c.children.length>0)return;
-  ['Glicose','Creatinina','Ureia','Colesterol','HDL','Triglicérides','TGO','TGP','Fosfatase Alc.','PCR','Amilase','Bilirrubina T.'].forEach(function(a){addPxAnalito(a);});
+  var c=el('px-analitos-form');if(!c||c.children.length>0)return;
+  ['Glicose','Creatinina','Ureia','Colesterol','HDL','Triglicérides','TGO','TGP','Fosfatase Alc.','PCR','Amilase','Bilirrubina T.'].forEach(function(a){addPxAn(a);});
 }
-function addPxAnalito(nm){
-  pxCount++;var id='px'+pxCount;
-  var c=gel('px-analitos-form');if(!c)return;
+function addPxAn(nm){
+  pxCount++;var id='px'+pxCount;var c=el('px-analitos-form');if(!c)return;
   var d=document.createElement('div');
   d.style.cssText='display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:8px;align-items:end;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--bd)';
   d.innerHTML='<div><label class="fl">Analito</label><input type="text" value="'+(nm||'')+'" id="'+id+'-nm" oninput="calcPxID(\''+id+'\')"></div>'
@@ -1195,41 +1404,19 @@ function addPxAnalito(nm){
   c.appendChild(d);
 }
 function calcPxID(id){
-  var res=parseFloat(gval(id+'-res')),med=parseFloat(gval(id+'-med')),dp=parseFloat(gval(id+'-dp'));
-  var pill=gel(id+'-id');if(!pill)return;
+  var res=parseFloat(val(id+'-res')),med=parseFloat(val(id+'-med')),dp=parseFloat(val(id+'-dp'));
+  var pill=el(id+'-id');if(!pill)return;
   if(!isNaN(res)&&!isNaN(med)&&!isNaN(dp)&&dp>0){
     var v=Math.abs((res-med)/dp);
     pill.textContent=v.toFixed(2);
     pill.className='ip '+(v<=1?'ib':v<=2?'is':v<=3?'ia':'ii');
   }else{pill.textContent='—';pill.className='ip is';}
 }
-async function salvarCiclo(){
-  var lote=parseInt(gval('px-lote'));
-  if(!lote){fb('px-fb','Informe o lote.','var(--rd)');return;}
-  try{
-    var r=await db.p('proex_ciclos',{lote:lote,data_resultado:gval('px-data'),analitos_inaceitaveis:gval('px-inac'),medida_corretiva:gval('px-corr'),observacoes:gval('px-obs'),tem_inaceitavel:!!gval('px-inac')});
-    var cid=r[0]?.id;
-    if(cid){
-      var rows=document.querySelectorAll('[id$="-nm"]');
-      var ad=[];
-      rows.forEach(function(el){
-        var bid=el.id.replace('-nm','');
-        var res=parseFloat(gval(bid+'-res')),med=parseFloat(gval(bid+'-med')),dp=parseFloat(gval(bid+'-dp'));
-        if(!el.value||isNaN(res)||isNaN(med)||isNaN(dp))return;
-        var v=Math.abs((res-med)/dp);
-        ad.push({ciclo_id:cid,lote:lote,analito:el.value,resultado_lab:res,media_grupo:med,dp_grupo:dp,indice_desvio:Math.round(v*100)/100,classificacao:v<=1?'bom':v<=2?'satisfatorio':v<=3?'atencao':'inaceitavel'});
-      });
-      if(ad.length)await db.p('proex_analitos',ad);
-    }
-    log('lançou PRO-EX','proex','Lote '+lote,'PRO-EX Lote '+lote);
-    fb('px-fb','✓ Ciclo Lote '+lote+' salvo!');
-  }catch(e){fb('px-fb','Erro: '+e.message,'var(--rd)');}
-}
 
 // INIT
 document.addEventListener('DOMContentLoaded',function(){
   var dt=new Date().toISOString().split('T')[0];
-  ['cq-dt','bio-data','temp-data','limp-data','px-data'].forEach(function(id){ini(id,dt);});
+  ['cq-dt','bio-data','temp-data','limp-data','px-novo-data'].forEach(function(id){set(id,dt);});
 });
 
 </script>
